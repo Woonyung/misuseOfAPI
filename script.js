@@ -51,6 +51,7 @@ function getFoursquareData(lat, lng){
 					
 			for ( var i = 0; i < foursquareArray.length; i++){
 				getLikeData(foursquareArray[i].id);
+
 			}
 			//drawMap(lat,lng);
 	
@@ -62,6 +63,8 @@ function getFoursquareData(lat, lng){
   	});
 }
 
+// create empty array for holding all like counts
+var likeArray = [];
 
 function getLikeData(id){
 	var baseURL = 'https://api.foursquare.com/v2/venues/';
@@ -70,14 +73,16 @@ function getLikeData(id){
 		type: 'GET',
 		dataType: 'jsonp',
 		success: function(data){
-			// ???
-			// want to know how I can combine all those values
-			console.log(data.response.likes.count);
+			// console.log(data.response.likes.count);
+			// combine into array????
+			likeArray.push(data.response.likes.count);
+			console.log(likeArray);
 
-			////////////////////////////////////
-			for (var i =0; i < foursquareArray.length; i++){
-				// foursquareArray[i].likes = data.response.likes.count; 
+			// put like values in foursquare array 
+			for ( var i = 0; i < likeArray.length; i++){
+				foursquareArray[i].likes = likeArray[i];
 			}
+			console.log("logging foursquare array data");
 			console.log(foursquareArray);
 
 		},
