@@ -17,18 +17,16 @@ var mode;
 
 // Foursqaure Data
 function FoursqaureData(id, name, location){
-	this.id = id;
-	this.name = name;
-	this.location = location;
-}
+	var FS = this;
+	FS.id = id;
+	FS.name = name;
+	FS.location = location;
+	FS.likes = '';
 
-function LikeData(id){
-	this.id = id;
 }
 
 // array to store our objects
 var foursquareArray = [];
-var likeArray = [];
 
 /////////////////////// Foursquare keys //////////////////
 var oAuth = "-";
@@ -49,14 +47,11 @@ function getFoursquareData(lat, lng){
 				foursquareArray.push(tempObject1);
 			}
 
-
+			//console.log(foursquareArray);
+					
 			for ( var i = 0; i < foursquareArray.length; i++){
-				//console.log(foursquareArray[i].location);
-				//get Like data
 				getLikeData(foursquareArray[i].id);
 			}
-
-			//getLikeData(foursquareArray[0].id);
 			//drawMap(lat,lng);
 	
 		},
@@ -75,10 +70,16 @@ function getLikeData(id){
 		type: 'GET',
 		dataType: 'jsonp',
 		success: function(data){
-			console.log("getting data");
-			console.log(data);
+			// ???
+			// want to know how I can combine all those values
+			console.log(data.response.likes.count);
 
-			//for ( var i = 0; i < )
+			////////////////////////////////////
+			for (var i =0; i < foursquareArray.length; i++){
+				// foursquareArray[i].likes = data.response.likes.count; 
+			}
+			console.log(foursquareArray);
+
 		},
 		error: function(err){
 			console.log("we have problem in getting Like Data");
@@ -97,10 +98,10 @@ var map = L.mapbox.map('map', '-')
 	.setView([40.73, -74.00], zoom); // default view 
 
 
-// Geo Coding
+// Geo Coding - for current location (input)
 function geocodeLocation(address){
-	// GEOCODE IT - FOR CURRENT LOCATION
-	var geocoder = L.mapbox.geocoder('-'); 
+	// geocode
+	var geocoder = L.mapbox.geocoder('mapbox.places-v1'); 
 	geocoder.query(address, function(err, data){
 		if (data.lbounds) {
 		    map.fitBounds(data.lbounds);
