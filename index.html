@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width">
+    </head>
+    <!-- javascript library -->
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script> <!--jQuery-->
+
+    <!-- Yelp oAuth libraries -->
+    <script type="text/javascript" src="http://oauth.googlecode.com/svn/code/javascript/oauth.js"></script>
+    <script type="text/javascript" src="http://oauth.googlecode.com/svn/code/javascript/sha1.js"></script>
+
+    <!-- mapbox library -->
+    <script src='https://api.tiles.mapbox.com/mapbox.js/v2.1.2/mapbox.js'></script>
+    <link href='https://api.tiles.mapbox.com/mapbox.js/v2.1.2/mapbox.css' rel='stylesheet' />
+
+    <!-- my stylesheet -->
+    <link rel="stylesheet" type="text/css" href="stylesheet.css">
+
+    <body>
+        <div id="buttonArea">
+            this will be the location for buttons <br>
+            <button id="currentLoc">use current location</button> OR 
+            <input type="text" id="inputAddress" placeholder="address">
+            <button id="searchButton">TELL ME</button>
+        </div>
+        <div id="map"></div>
+    </body>
+        
+    <!-- main js -->
+    <script type="text/javascript" src="script.js"></script>
+</html>
+
+
+

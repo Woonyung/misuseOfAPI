@@ -1,0 +1,78 @@
+////////////////////////////////////
+// MIXINS
+/* create flat rounded button */
+@mixin buttonTraits{
+
+	border: 0px solid #006;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	-ms-border-radius: 5px;
+	-o-border-radius: 5px;
+	border-radius: 5px;
+}
+
+/////////////////////////////////
+// VARIABLES
+$topMargin: 50px;
+$bottomMargin: 30px;
+
+
+/////////////////////////////////////////
+/* load the font face from local machine */
+@font-face {
+    font-family: gotham-book;
+    src: url(fonts/Gotham-Book.otf);
+}
+
+
+body{
+	font-family: gotham-book;
+	margin:0; padding:0; // full screen
+}
+
+///////////////////////////////////////
+/* INPUT AND BUTTON AREAS */
+#buttonArea{
+	background-color: yellow;
+}
+
+/* inputs*/ 
+#inputAddress{
+	@include buttonTraits;
+	border: 0px solid #006;
+    background: #caf6ee;
+    width: 400px;
+    height: 30px;
+}
+
+/* buttons*/
+#currentLoc{
+	@include buttonTraits;
+	background-color: green;
+	color: white;
+	height: 30px;
+}
+
+#currentLoc:hover{
+	background-color: blue;
+}
+
+
+#searchButton{
+	@include buttonTraits;
+	background-color: black;
+	color:white;
+	height: 30px;
+}
+
+#searchButton:hover{
+	background-color: blue;
+}
+
+///////////////////////////////////////
+/* map div for loading maps */ 
+#map {
+	position:absolute; 
+	top: $topMargin; bottom: $bottomMargin; 
+	width: 100%;
+}
