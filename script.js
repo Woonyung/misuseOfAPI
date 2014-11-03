@@ -6,11 +6,12 @@ Assignment #2 : misuse of API
 Oct 31th, 2014
 woonyungchoi@gmail.com
 
-05.
+06.
 back to foursquare API - venue
 parsing like counting
 
 get Foursquare data -> get Like data (id)
+
 */
 
 var mode;
@@ -25,13 +26,14 @@ function FoursqaureData(id, name, location){
 
 }
 
-// array to store our objects
-var foursquareArray = [];
-
 /////////////////////// Foursquare keys //////////////////
 var oAuth = "-";
 
+// array to store our objects
+var foursquareArray = [];
+
 function getFoursquareData(lat, lng){
+	// empty the array 
 	foursquareArray = [];
 	var baseURL = "https://api.foursquare.com/v2/venues/search?ll=";
 	$.ajax({
@@ -48,11 +50,7 @@ function getFoursquareData(lat, lng){
 				foursquareArray.push(tempObject1);
 			}
 
-			for ( var i = 0; i < foursquareArray.length; i++){
-				getLikeData(foursquareArray[i].id);
-
-			}
-			//drawMap(lat,lng);
+			getLikeData(foursquareArray);
 	
 		},
 		error: function(data){
@@ -65,31 +63,49 @@ function getFoursquareData(lat, lng){
 // create empty array for holding all like counts
 var likeArray = [];
 
-function getLikeData(id){
+function getLikeData(foursquareArray){
+	// empty the array 
 	likeArray = [];
-	var baseURL = 'https://api.foursquare.com/v2/venues/';
-	$.ajax({
-		url: baseURL + id + "/likes?oauth_token=" + oAuth,
-		type: 'GET',
-		dataType: 'jsonp',
-		success: function(data){
-			// console.log(data.response.likes.count);
-			// push into array
-			likeArray.push(data.response.likes.count);
-			console.log(likeArray);
 
-			// put like values in foursquare array 
-			for ( var i = 0; i < likeArray.length; i++){
-				foursquareArray[i].likes = likeArray[i];
+	// Storing id, so that I can pass into ajax request
+	for (var i = 0; i < foursquareArray.length; i++){
+		console.log("storing id");
+		var id = foursquareArray[i].id;
+		console.log(id);
+
+		var baseURL = 'https://api.foursquare.com/v2/venues/';
+		$.ajax({
+			url: baseURL + id + "/likes?oauth_token=" + oAuth,
+			type: 'GET',
+			dataType: 'jsonp',
+			success: function(data){
+				// push into array
+				likeArray.push(data.response.likes.count);
+				//console.log(likeArray);
+
+				// put like values in foursquare array 
+				for ( var i = 0; i < likeArray.length; i++){
+					foursquareArray[i].likes = likeArray[i];
+				}
+
+			},
+			error: function(err){
+				console.log("we have problem in getting Like Data");
 			}
-			console.log("logging foursquare array data");
-			console.log(foursquareArray);
+		});
+	}
 
-		},
-		error: function(err){
-			console.log("we have problem in getting Like Data");
+	mapTheData(foursquareArray);
+}
+
+function mapTheData(foursquareArray){
+	console.log("map the data function");
+	console.log(foursquareArray);
+	for (var i = 0; i < foursquareArray.length; i++){
+		if( typeof foursquareArray[i].likes === 'number'){
+			console.log(foursquareArray[i].likes);
 		}
-	});
+	}
 }
 
 
@@ -116,22 +132,28 @@ function geocodeLocation(address){
 			var lat = data.latlng[0];
 			var lng = data.latlng[1];
 
-		    map.setView([lat, lng], zoom); // set view
 
 		    // REQUEST FOURSQUARE DATA
 			getFoursquareData(lat,lng);
 
-		    //////////////////////////////
-		    // DRAW CURRENT LOCATION 
-		    var currentCircle = L.circle([lat,lng], 20,{
-		        stroke: false,
-		        fillColor: 'rgb(255,0,0)',
-		        fillOpacity: 1
-		    }).addTo(map)
-		    .bindPopup("current location");
+		    // DRAW CURRENT LOCATION
+		    // red 
+		    drawCurrentLocation(lat,lng, 'rgb(255,0,0)');
 		} // end of else if
 	}); // end of geocode query function
 }
+
+//////// DRAW CURRENT LOCATION
+function drawCurrentLocation(lat,lng, color){
+	map.setView([lat, lng], zoom); // set view
+	var currentCircle = L.circle([lat,lng], 20,{
+	    stroke: false,
+	    fillColor: color,
+	    fillOpacity: 1
+	}).addTo(map)
+	.bindPopup("current location");
+}
+
 
 
 /////////////////////// when document is ready//////////////////
@@ -152,8 +174,9 @@ $(document).ready(function(){
 
 	// search button
 	$("#searchButton").click(function(){
-		// clear off foursquare array?
-		foursquareArray = [];
+		// // clear off foursquare array?
+		// foursquareArray = [];
+		// likeArray = [];
 		
 		// MODE 2 
 		// getting input values 
@@ -172,16 +195,13 @@ $(document).ready(function(){
 				var lng = location.coords.longitude;
 				console.log(lat + ","+ lng);
 
-				// and draw the magenta circle based on the current location of computer
-			   	map.setView([lat, lng], zoom);
-			   	var currentCircle = L.circle([lat, lng], 20,{
-			        stroke: false,
-			        fillColor: 'rgb(255,0,255)',
-			        fillOpacity: 1
-			    }).addTo(map);
-
-				// then make yelp request
+				// REQUEST FOURSQUARE DATA
 				getFoursquareData(lat,lng);
+
+				// DRAW CURRENT LOCATION - COMPUTER LOCATION
+				// yellow
+		    	drawCurrentLocation(lat,lng, 'rgb(255,255,0)');
+
 			});
 		} else if( mode == 2 ) {  // OR user manually typed the information
 			console.log("***** MODE2 : USER MANUALLY TYPED ADDRESS");
