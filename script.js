@@ -32,6 +32,7 @@ var foursquareArray = [];
 var oAuth = "-";
 
 function getFoursquareData(lat, lng){
+	foursquareArray = [];
 	var baseURL = "https://api.foursquare.com/v2/venues/search?ll=";
 	$.ajax({
 		url: baseURL + lat + "," + lng + "&oauth_token=" + oAuth,
@@ -47,8 +48,6 @@ function getFoursquareData(lat, lng){
 				foursquareArray.push(tempObject1);
 			}
 
-			//console.log(foursquareArray);
-					
 			for ( var i = 0; i < foursquareArray.length; i++){
 				getLikeData(foursquareArray[i].id);
 
@@ -67,6 +66,7 @@ function getFoursquareData(lat, lng){
 var likeArray = [];
 
 function getLikeData(id){
+	likeArray = [];
 	var baseURL = 'https://api.foursquare.com/v2/venues/';
 	$.ajax({
 		url: baseURL + id + "/likes?oauth_token=" + oAuth,
@@ -74,7 +74,7 @@ function getLikeData(id){
 		dataType: 'jsonp',
 		success: function(data){
 			// console.log(data.response.likes.count);
-			// combine into array????
+			// push into array
 			likeArray.push(data.response.likes.count);
 			console.log(likeArray);
 
@@ -152,7 +152,9 @@ $(document).ready(function(){
 
 	// search button
 	$("#searchButton").click(function(){
-				
+		// clear off foursquare array?
+		foursquareArray = [];
+		
 		// MODE 2 
 		// getting input values 
 		var inputAddress = $("#inputAddress").val();
