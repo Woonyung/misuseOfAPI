@@ -26,8 +26,11 @@ function FoursqaureData(id, name, location){
 
 }
 
+
 /////////////////////// Foursquare keys //////////////////
-var oAuth = "-";
+var CLIENT_ID ='-';
+var CLIENT_SECRET ='-';
+
 
 // array to store our objects
 var foursquareArray = [];
@@ -37,7 +40,7 @@ function getFoursquareData(lat, lng){
 	foursquareArray = [];
 	var baseURL = "https://api.foursquare.com/v2/venues/search?ll=";
 	$.ajax({
-		url: baseURL + lat + "," + lng + "&oauth_token=" + oAuth,
+		url: baseURL + lat + "," + lng + '&client_id='+ CLIENT_ID+'&client_secret='+ CLIENT_SECRET+'&v=20141101',
 		type: 'GET',
 		dataType: 'jsonp',
 		success: function(data){
@@ -75,7 +78,7 @@ function getLikeData(foursquareArray){
 
 		var baseURL = 'https://api.foursquare.com/v2/venues/';
 		$.ajax({
-			url: baseURL + id + "/likes?oauth_token=" + oAuth,
+			url: baseURL + id + '/likes?&client_id='+ CLIENT_ID+'&client_secret='+ CLIENT_SECRET+'&v=20141101',
 			type: 'GET',
 			dataType: 'jsonp',
 			success: function(data){
