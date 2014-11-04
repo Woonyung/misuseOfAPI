@@ -6,12 +6,13 @@ Assignment #2 : misuse of API
 Oct 31th, 2014
 woonyungchoi@gmail.com
 
-07.
+09.
 back to foursquare API - venue
 parsing like counting
 get Foursquare data -> get Like data (id)
 
-figured out the order!!!
+sorted only crappy place near me..
+but I wanted to expand as cities...
 
 */
 
@@ -28,22 +29,27 @@ function FoursqaureData(id, name, location){
 
 }
 
-
-/////////////////////// Foursquare keys //////////////////
+///////////////////////////////////////////////////////////
+////////////////////  Foursquare keys  //////////////////
 var CLIENT_ID ='-';
 var CLIENT_SECRET ='-';
 
 
 // array to store our objects
 var foursquareArray = [];
+var limit = 50; // number of venue that I want to look for 
 
 function getFoursquareData(lat, lng){
 	// empty the array 
 	foursquareArray = [];
-	
-	var baseURL = "https://api.foursquare.com/v2/venues/search?ll=";
+
+	var baseURL = "https://api.foursquare.com/v2/venues/search?";
 	$.ajax({
-		url: baseURL + lat + "," + lng + '&client_id='+ CLIENT_ID+'&client_secret='+ CLIENT_SECRET+'&v=20141101',
+		//url: baseURL + lat + "," + lng +'&client_id='+ CLIENT_ID+'&client_secret='+ CLIENT_SECRET+'&v=20141101',
+		url: baseURL + 
+			'll='+ lat + "," + lng +
+			'&limit='+ limit+
+			'&client_id='+ CLIENT_ID+'&client_secret='+ CLIENT_SECRET+'&v=20141101',
 		type: 'GET',
 		dataType: 'jsonp',
 		success: function(data){
@@ -54,10 +60,10 @@ function getFoursquareData(lat, lng){
 
 			for ( var i = 0; i < data.response.venues.length; i++){
 				if (data.response.venues[i] != null){
-					var tempObject1 = new FoursqaureData(data.response.venues[i].id,
+					var tempObject = new FoursqaureData(data.response.venues[i].id,
 														data.response.venues[i].name,
 														data.response.venues[i].location);
-					getLikeData(tempObject1);
+					getLikeData(tempObject);
 				}
 				
 			}
@@ -73,7 +79,7 @@ function getFoursquareData(lat, lng){
 
 function getLikeData(tempObject){
 	var id = tempObject.id;
-	console.log(id);
+	//console.log(id);
 
 	var baseURL = 'https://api.foursquare.com/v2/venues/';
 	$.ajax({
@@ -104,20 +110,33 @@ function getLikeData(tempObject){
 }
 
 function mapTheData(foursquareArray){
-	for ( var i = 0; i < foursquareArray.length; i++){
-	 console.log(foursquareArray[i].likes); /// doesn't work
+	//console.log(foursquareArray);
+
+	// sorted objects by descending order of like
+	var sortedArray = foursquareArray.sort(function(a, b){
+		return a.likes-b.likes;
+	});
+	console.log(sortedArray); 
+
+	for (var i = 0; i < sortedArray.length; i++){
+		// if like count is less than 5, draw the circle
+		if ( sortedArray[i].likes < 5){
+			// draw points of crappy places
+			drawVenues(sortedArray[i]);
+		}
 	}
+
 }
 
-
-/////////////////////////// LOAD THE MAP //////////////////
+///////////////////////////////////////////////////////////////////
+/////////////////////////// LOAD THE MAP //////////////////////////
 // draw basic map
-var zoom = 15;
+var zoom = 18;
 
 L.mapbox.accessToken = '-';
 // Create a map in the div #map
 var map = L.mapbox.map('map', '-')
-	.setView([40.73, -74.00], zoom); // default view 
+	.setView([40.73, -74.00], 15); // default view 
 
 
 // Geo Coding - for current location (input)
@@ -137,6 +156,7 @@ function geocodeLocation(address){
 
 		    // DRAW CURRENT LOCATION
 		    drawCurrentLocation(lat,lng, 'rgb(255,0,0)');
+
 		} // end of else if
 	}); // end of geocode query function
 }
@@ -144,7 +164,7 @@ function geocodeLocation(address){
 //////// DRAW CURRENT LOCATION
 function drawCurrentLocation(lat,lng, color){
 	map.setView([lat, lng], zoom); // set view
-	var currentCircle = L.circle([lat,lng], 20,{
+	var currentCircle = L.circle([lat,lng], 5,{
 	    stroke: false,
 	    fillColor: color,
 	    fillOpacity: 1
@@ -153,7 +173,20 @@ function drawCurrentLocation(lat,lng, color){
 }
 
 
+//////// DRAW VENUES NEAR ME
+function drawVenues(crappyVenue){
+	console.log(crappyVenue.likes);
+	//var popupContent = crappyVenue.likes;
+	var currentCircle = L.circle([crappyVenue.location.lat,crappyVenue.location.lng], 3,{
+	    stroke: false,
+	    fillColor: 'rgb(0,0,0)',
+	    fillOpacity: 1
+	}).addTo(map)
+	.bindPopup(crappyVenue.name);
 
+}
+
+/////////////////////////////////////////////////////////////////
 /////////////////////// when document is ready//////////////////
 $(document).ready(function(){
 
@@ -194,8 +227,7 @@ $(document).ready(function(){
 				getFoursquareData(lat,lng);
 
 				// DRAW CURRENT LOCATION - COMPUTER LOCATION
-				// yellow
-		    	drawCurrentLocation(lat,lng, 'rgb(255,255,0)');
+		    	drawCurrentLocation(lat,lng, 'rgb(0,0,255)');
 
 			});
 		} else if( mode == 2 ) {  // OR user manually typed the information
