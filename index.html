@@ -8,11 +8,11 @@
         <meta name="viewport" content="width=device-width">
     </head>
     <!-- javascript library -->
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script> <!--jQuery-->
+    <!-- jQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
 
-    <!-- Yelp oAuth libraries -->
-    <script type="text/javascript" src="http://oauth.googlecode.com/svn/code/javascript/oauth.js"></script>
-    <script type="text/javascript" src="http://oauth.googlecode.com/svn/code/javascript/sha1.js"></script>
+    <!-- underscore -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.7.0/underscore-min.js"></script>
 
     <!-- mapbox library -->
     <script src='https://api.tiles.mapbox.com/mapbox.js/v2.1.2/mapbox.js'></script>
@@ -27,8 +27,17 @@
             <button id="currentLoc">use current location</button> OR 
             <input type="text" id="inputAddress" placeholder="address">
             <button id="searchButton">TELL ME</button>
+
         </div>
         <div id="map"></div>
+        <div id="infoBox">
+            <div id="topPart">
+            To see the information, <br>
+            hover on the spot
+            </div>
+            <br>
+            <div id="bottomPart"></div>
+        </div>
     </body>
         
     <!-- main js -->

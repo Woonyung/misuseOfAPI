@@ -6,24 +6,25 @@ Assignment #2 : misuse of API
 Oct 31th, 2014
 woonyungchoi@gmail.com
 
-11.
-back to foursquare API - venue
-parsing like counting
-get Foursquare data -> get Like data (id)
+12.
+- back to foursquare API - venue
+- parsing like counting
+- get Foursquare data -> get Like data (id)
 
-sorted only crappy place near me.
-
+- sorted only crappy place near me.
+- color mapping according to the like count
 */
 
 var mode;
 var responseLength = -1;
 
 // Foursqaure Data
-function FoursqaureData(id, name, location){
+function FoursqaureData(id, name, location, checkin){
 	var FS = this;
 	FS.id = id;
 	FS.name = name;
 	FS.location = location;
+	FS.checkin = checkin;
 	FS.likes = '';
 
 }
@@ -39,7 +40,7 @@ var foursquareArray = [];
 var limit = 50; // number of venue that I want to look for maximum: 50
 var intent = 'browse';
 var query = 'food';
-var radius = 10000;
+var radius = 5000;
 
 function getFoursquareData(lat, lng){
 	// empty the array 
@@ -61,16 +62,16 @@ function getFoursquareData(lat, lng){
 			responseLength = data.response.venues.length;
 			console.log("RL: " + responseLength);
 
-			// console.log(data.response.venues[0].location);
+			console.log(data);
 
 			for ( var i = 0; i < data.response.venues.length; i++){
 				if (data.response.venues[i] != null){
 					var tempObject = new FoursqaureData(data.response.venues[i].id,
 														data.response.venues[i].name,
-														data.response.venues[i].location);
+														data.response.venues[i].location,
+														data.response.venues[i].stats.checkinsCount);
 					getLikeData(tempObject);
-				}
-				
+				}				
 			}
 	
 		},
@@ -98,7 +99,7 @@ function getLikeData(tempObject){
 			//console.log(data.response.likes.count);
 			tempObject.likes = data.response.likes.count;
 			foursquareArray.push(tempObject);
-			console.log("FS Array: "+foursquareArray.length);
+			console.log("FS Array: " + foursquareArray.length);
 
 			// if foursqaure array length = response length ( running function is done)
 			if (foursquareArray.length == responseLength ){
@@ -121,14 +122,24 @@ function mapTheData(foursquareArray){
 	var sortedArray = foursquareArray.sort(function(a, b){
 		return a.likes-b.likes;
 	});
-	console.log(sortedArray); 
 
+	// console.log(sortedArray); 
+	// looping through sorted array -> and run function by passing each elements of array
 	for (var i = 0; i < sortedArray.length; i++){
-		//drawVenues(sortedArray[i]);
-		//if like count is less than 10, draw the circle
-		if ( sortedArray[i].likes < 10){
-			// draw points of crappy places
-			drawVenues(sortedArray[i]);
+		// color mapping according to the like counts
+		// and draw crappy places
+		if ( sortedArray[i].likes == 0){
+			drawVenues(sortedArray[i], 'rgb(0,255,0)');
+		} else if ( sortedArray[i].likes < 5){ 
+			drawVenues(sortedArray[i], 'rgb(0,255,0)');
+		} else if ( sortedArray[i].likes < 10) {
+			drawVenues(sortedArray[i], 'rgb(255,255,0)');
+		} else if ( sortedArray[i].likes < 15) {
+			drawVenues(sortedArray[i], 'rgb(255,255,0)');
+		} else if ( sortedArray[i].likes < 20) {
+			drawVenues(sortedArray[i], 'rgb(255,0,0)');
+		} else {
+			drawVenues(sortedArray[i], 'rgb(255,255,255)');
 		}
 	}
 
@@ -143,6 +154,7 @@ L.mapbox.accessToken = '-';
 // Create a map in the div #map
 var map = L.mapbox.map('map', '-')
 	.setView([40.73, -74.00], zoom); // default view 
+
 
 
 // Geo Coding - for current location (input)
@@ -161,7 +173,7 @@ function geocodeLocation(address){
 			getFoursquareData(lat,lng);
 
 		    // DRAW CURRENT LOCATION
-		    drawCurrentLocation(lat,lng, 'rgb(255,0,0)');
+		    drawCurrentLocation(lat,lng, 'rgb(0,0,0)');
 
 		} // end of else if
 	}); // end of geocode query function
@@ -170,27 +182,45 @@ function geocodeLocation(address){
 //////// DRAW CURRENT LOCATION
 function drawCurrentLocation(lat,lng, color){
 	map.setView([lat, lng], zoom); // set view
+
 	var currentCircle = L.circle([lat,lng], 50,{
 	    stroke: false,
 	    fillColor: color,
 	    fillOpacity: 1
 	}).addTo(map)
 	.bindPopup("current location");
+
 }
 
 
 //////// DRAW VENUES NEAR ME
-function drawVenues(crappyVenue){
-	console.log(crappyVenue.likes);
-	//var popupContent = crappyVenue.likes;
-	var currentCircle = L.circle([crappyVenue.location.lat,crappyVenue.location.lng], 50,{
+function drawVenues(crappyVenue, color){
+	console.log(crappyVenue);
+	//console.log(crappyVenue.likes);
+	
+	var lat = crappyVenue.location.lat;
+	var lng = crappyVenue.location.lng;
+
+
+	var currentCircle = L.circle([lat,lng], 50,{
 	    stroke: false,
-	    fillColor: 'rgb(0,255,0)',
+	    fillColor: color,
 	    fillOpacity: 1
-	}).addTo(map)
-	.bindPopup(crappyVenue.name);
+	}).on('mouseover',function(e){ // when user hover on the circle, it will shows the info
+		bottomPart.innerHTML = crappyVenue.name 
+								+ '<br>' + 'Like Counts: '
+								+ crappyVenue.likes
+								+ '<br>' + 'Check-in Counts: ' 
+								+ crappyVenue.checkin
+								+ '<br><br>'
+								+ crappyVenue.location.address + ', ' 
+								+ crappyVenue.location.city;
+	})
+	.addTo(map);
+	// .bindPopup(crappyVenue.name);
 
 }
+
 
 /////////////////////////////////////////////////////////////////
 /////////////////////// when document is ready//////////////////
@@ -233,7 +263,7 @@ $(document).ready(function(){
 				getFoursquareData(lat,lng);
 
 				// DRAW CURRENT LOCATION - COMPUTER LOCATION
-		    	drawCurrentLocation(lat,lng, 'rgb(0,0,255)');
+		    	drawCurrentLocation(lat,lng, 'rgb(0,0,0)');
 
 			});
 		} else if( mode == 2 ) {  // OR user manually typed the information
