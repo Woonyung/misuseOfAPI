@@ -138,7 +138,7 @@ function mapTheData(foursquareArray){
 			drawVenues(sortedArray[i], 'RGB(254, 244, 127)');
 		} else if ( sortedArray[i].likes < 20) {
 			drawVenues(sortedArray[i], 'RGB(254, 205, 68)');
-		} else {
+		} else if ( sortedArray[i].likes < 30){
 			drawVenues(sortedArray[i], 'RGB(255, 87, 113)');
 		}
 	}
