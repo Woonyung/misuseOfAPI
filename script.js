@@ -39,7 +39,7 @@ var CLIENT_SECRET ='-';
 var foursquareArray = [];
 var limit = 50; // number of venue that I want to look for maximum: 50
 var intent = 'browse';
-var query = 'food';
+var query = 'cupcake';
 var radius = 5000;
 
 function getFoursquareData(lat, lng){
@@ -59,13 +59,15 @@ function getFoursquareData(lat, lng){
 		type: 'GET',
 		dataType: 'jsonp',
 		success: function(data){
+			bottomPart.innerHTML = "";
+
 			responseLength = data.response.venues.length;
 			console.log("RL: " + responseLength);
 
 			console.log(data);
 
 			for ( var i = 0; i < data.response.venues.length; i++){
-				if (data.response.venues[i] != null){
+				if (data.response.venues[i] != null ){
 					var tempObject = new FoursqaureData(data.response.venues[i].id,
 														data.response.venues[i].name,
 														data.response.venues[i].location,
@@ -117,7 +119,6 @@ function getLikeData(tempObject){
 
 function mapTheData(foursquareArray){
 	//console.log(foursquareArray);
-
 	// sorted objects by descending order of like
 	var sortedArray = foursquareArray.sort(function(a, b){
 		return a.likes-b.likes;
@@ -195,30 +196,46 @@ function drawCurrentLocation(lat,lng, color){
 
 //////// DRAW VENUES NEAR ME
 function drawVenues(crappyVenue, color){
-	console.log(crappyVenue);
-	//console.log(crappyVenue.likes);
+	var address, city;
+	// console.log(crappyVenue);
+	// console.log(crappyVenue.likes);
 	
 	var lat = crappyVenue.location.lat;
 	var lng = crappyVenue.location.lng;
 
+	// see check if it does not have address
+	if (crappyVenue.location.address == undefined) {
+		address = ' - - - ';
+	} else {
+		address = crappyVenue.location.address;
+	}
+	// see check if it does not have city name
+	if (crappyVenue.location.city == undefined) {
+		city = ' - - - ';
+	} else {
+		city = crappyVenue.location.city;
+	}
 
+	// Draw the venue and display the information on the popup
 	var currentCircle = L.circle([lat,lng], 50,{
 	    stroke: false,
 	    fillColor: color,
 	    fillOpacity: 1
 	}).on('mouseover',function(e){ // when user hover on the circle, it will shows the info
-		bottomPart.innerHTML = crappyVenue.name 
+		bottomPart.innerHTML = 	crappyVenue.name 
 								+ '<br>' + 'Like Counts: '
 								+ crappyVenue.likes
 								+ '<br>' + 'Check-in Counts: ' 
 								+ crappyVenue.checkin
 								+ '<br><br>'
-								+ crappyVenue.location.address + ', ' 
-								+ crappyVenue.location.city;
+								+ '<br>' + 'Distance: '
+								+ crappyVenue.location.distance
+								+ '<br>'
+								+ address + ', '
+								+ city;
 	})
 	.addTo(map);
 	// .bindPopup(crappyVenue.name);
-
 }
 
 
@@ -254,6 +271,8 @@ $(document).ready(function(){
 			console.log("***** MODE1 : USER USED CUREENT LOCATION");
 		 	// [] loading screen/ indication would be needed
 			console.log("loading current location of computer");
+			bottomPart.innerHTML = "<br>" + "It's loading";
+
 			// get current location of computer 
 			navigator.geolocation.getCurrentPosition(function(location){
 				var lat = location.coords.latitude;
