@@ -11,11 +11,19 @@
 	border-radius: 5px;
 }
 
+@mixin inputTraits{
+	border: 0px solid #006;
+    background: #fff;
+	height: 28px;
+}
 /////////////////////////////////
-// VARIABLES
-$topMargin: 50px;
+// VARIABLES FOR MAPs
+$topMargin: 90px;
 $bottomMargin: 30px;
+$leftMargin: 20px;
 
+$darkBlue: #1b1e49;
+$hotPink: #ff5771;
 
 /////////////////////////////////////////
 /* load the font face from local machine */
@@ -26,47 +34,88 @@ $bottomMargin: 30px;
 
 
 body{
+	background-color: $darkBlue;
+	color: white;
 	font-family: gotham-book;
 	margin:0; padding:0; // full screen
 }
 
-///////////////////////////////////////
-/* INPUT AND BUTTON AREAS */
-#buttonArea{
-	background-color: yellow;
+input:focus{
+    outline: 0;
 }
 
-/* inputs*/ 
+///////////////////////////////////////
+#title{
+	font-size: 12px;
+	letter-spacing: 0.3em;
+	text-transform: uppercase;
+}
+
+// #logo{
+// 	width: 30px;
+// 	left: 10px;
+// 	top: 11px;
+// 	position: absolute;
+// }
+
+#extraMarginTop{
+	height: 13px;
+	// background-color:red;
+}
+
+#extraMarginBottom{
+	height: 8px;
+	// background-color:red;
+}
+
+
+/* INPUT AND BUTTON AREAS */
+#buttonArea{
+	background-color: $darkBlue;
+	padding: 0 0 0 $leftMargin;
+}
+
+
+/* inputs*/
+#searchTerm{
+	@include buttonTraits;
+	@include inputTraits;
+	width: 100px;
+}
+
 #inputAddress{
 	@include buttonTraits;
-	border: 0px solid #006;
-    background: #caf6ee;
+	@include inputTraits;
     width: 400px;
-    height: 30px;
 }
 
 /* buttons*/
 #currentLoc{
 	@include buttonTraits;
-	background-color: green;
+	background-color: $hotPink;
 	color: white;
 	height: 30px;
+	cursor: pointer;
 }
 
 #currentLoc:hover{
-	background-color: blue;
+	background-color: #dc3b54;
 }
 
 
 #searchButton{
-	@include buttonTraits;
-	background-color: black;
-	color:white;
+	// @include buttonTraits;
+	// background-color: $hotPink;
+	// color: white;
+	// height: 32px;
+
+	position: absolute;
 	height: 30px;
+	cursor: pointer;
 }
 
 #searchButton:hover{
-	background-color: blue;
+	// background-color: blue;
 }
 
 ///////////////////////////////////////
@@ -79,20 +128,44 @@ body{
 
 #infoBox{
 	position: absolute;
-	width: 200px;
-	height: 240px;
-	padding: 5px 10px;
+	width: 230px;
+	height: 260px;
+	padding: 20px 20px;
 
-	top: 60px;
-	right: 10px;
+	top: $topMargin + 20px;
+	right: 20px;
 
-	background: rgba(0,0,0,0.5);
+	background: rgba(0,0,0,0.6);
 	color: #fff;
 	font-size: 11px;
 	line-height: 18px;
 	border-radius: 3px;
 }
 
+.smallTitle{
+	text-transform:uppercase;
+	letter-spacing: 0.3em;
+	font-size: 12px;
+}
+
+#heart{
+	width: 18px;
+	margin-left: auto;
+}
+
+#marker{
+	width: 15px;
+	margin-left: auto;
+}
+
 #bottomPart{
 
 }
+///////////////////////////////
+#footer{
+	font-size: 10px;
+	position: absolute;
+	left: $leftMargin;
+	bottom: 7px;
+}
+

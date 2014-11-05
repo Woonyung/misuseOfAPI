@@ -17,6 +17,7 @@ woonyungchoi@gmail.com
 
 var mode;
 var responseLength = -1;
+var currentCircle;
 
 // Foursqaure Data
 function FoursqaureData(id, name, location, checkin){
@@ -39,10 +40,9 @@ var CLIENT_SECRET ='-';
 var foursquareArray = [];
 var limit = 50; // number of venue that I want to look for maximum: 50
 var intent = 'browse';
-var query = 'cupcake';
 var radius = 5000;
 
-function getFoursquareData(lat, lng){
+function getFoursquareData(lat, lng, query){
 	// empty the array 
 	foursquareArray = [];
 
@@ -87,7 +87,6 @@ function getFoursquareData(lat, lng){
 
 function getLikeData(tempObject){
 	var id = tempObject.id;
-	//console.log(id);
 
 	var baseURL = 'https://api.foursquare.com/v2/venues/';
 	$.ajax({
@@ -101,7 +100,7 @@ function getLikeData(tempObject){
 			//console.log(data.response.likes.count);
 			tempObject.likes = data.response.likes.count;
 			foursquareArray.push(tempObject);
-			console.log("FS Array: " + foursquareArray.length);
+			//console.log("FS Array: " + foursquareArray.length);
 
 			// if foursqaure array length = response length ( running function is done)
 			if (foursquareArray.length == responseLength ){
@@ -130,17 +129,17 @@ function mapTheData(foursquareArray){
 		// color mapping according to the like counts
 		// and draw crappy places
 		if ( sortedArray[i].likes == 0){
-			drawVenues(sortedArray[i], 'rgb(0,255,0)');
+			drawVenues(sortedArray[i], 'RGB(255,255,255)');
 		} else if ( sortedArray[i].likes < 5){ 
-			drawVenues(sortedArray[i], 'rgb(0,255,0)');
+			drawVenues(sortedArray[i], 'RGB(41, 240, 135)');
 		} else if ( sortedArray[i].likes < 10) {
-			drawVenues(sortedArray[i], 'rgb(255,255,0)');
+			drawVenues(sortedArray[i], 'RGB(192, 253, 91)');
 		} else if ( sortedArray[i].likes < 15) {
-			drawVenues(sortedArray[i], 'rgb(255,255,0)');
+			drawVenues(sortedArray[i], 'RGB(254, 244, 127)');
 		} else if ( sortedArray[i].likes < 20) {
-			drawVenues(sortedArray[i], 'rgb(255,0,0)');
+			drawVenues(sortedArray[i], 'RGB(254, 205, 68)');
 		} else {
-			drawVenues(sortedArray[i], 'rgb(255,255,255)');
+			drawVenues(sortedArray[i], 'RGB(255, 87, 113)');
 		}
 	}
 
@@ -171,7 +170,7 @@ function geocodeLocation(address){
 			var lng = data.latlng[1];
 
 		    // REQUEST FOURSQUARE DATA
-			getFoursquareData(lat,lng);
+			getFoursquareData(lat,lng, query);
 
 		    // DRAW CURRENT LOCATION
 		    drawCurrentLocation(lat,lng, 'rgb(0,0,0)');
@@ -216,21 +215,23 @@ function drawVenues(crappyVenue, color){
 		city = crappyVenue.location.city;
 	}
 
+	// map.removeLayer(currentCircle); 
+
 	// Draw the venue and display the information on the popup
-	var currentCircle = L.circle([lat,lng], 50,{
+	currentCircle = L.circle([lat,lng], 50,{
 	    stroke: false,
 	    fillColor: color,
 	    fillOpacity: 1
 	}).on('mouseover',function(e){ // when user hover on the circle, it will shows the info
-		bottomPart.innerHTML = 	crappyVenue.name 
-								+ '<br>' + 'Like Counts: '
-								+ crappyVenue.likes
-								+ '<br>' + 'Check-in Counts: ' 
-								+ crappyVenue.checkin
+		bottomPart.innerHTML = 	'<span class="smallTitle">' + crappyVenue.name 
+								+ '<br><br>' + '<img src="img/heart.png" id="heart"> '
+								+ crappyVenue.likes + " likes"
+								+ '<br>' + '<img src="img/marker.png" id="marker"> ' 
+								+ crappyVenue.checkin + " check-ins"
 								+ '<br><br>'
 								+ '<br>' + 'Distance: '
-								+ crappyVenue.location.distance
-								+ '<br>'
+								+ crappyVenue.location.distance + " m"
+								+ '<br></span>'
 								+ address + ', '
 								+ city;
 	})
@@ -243,11 +244,13 @@ function drawVenues(crappyVenue, color){
 /////////////////////// when document is ready//////////////////
 $(document).ready(function(){
 
+
 	// get rid of unecessary borders.. 
 	$("#currentLoc").focus(function(){
 		$(this).blur();
 	});
 
+	console.log("???");
 
 	//MODE 1
 	$("#currentLoc").click(function(){
@@ -256,22 +259,23 @@ $(document).ready(function(){
 		mode = 1;
 	});
 
-
 	// search button
 	$("#searchButton").click(function(){
-		
+
 		// MODE 2 
 		// getting input values 
+		var query = $("#searchTerm").val();
 		var inputAddress = $("#inputAddress").val();
 		if(inputAddress!== '' ){ 
 			mode = 2;
 		}
 
+
 		if ( mode == 1  ){ // user pressed the currentLoc button
 			console.log("***** MODE1 : USER USED CUREENT LOCATION");
 		 	// [] loading screen/ indication would be needed
-			console.log("loading current location of computer");
-			bottomPart.innerHTML = "<br>" + "It's loading";
+			//console.log("loading current location of computer");
+			bottomPart.innerHTML = "<br><span class='smallTitle'>It's loading</span>";
 
 			// get current location of computer 
 			navigator.geolocation.getCurrentPosition(function(location){
@@ -279,7 +283,7 @@ $(document).ready(function(){
 				var lng = location.coords.longitude;
 
 				// REQUEST FOURSQUARE DATA
-				getFoursquareData(lat,lng);
+				getFoursquareData(lat,lng, query);
 
 				// DRAW CURRENT LOCATION - COMPUTER LOCATION
 		    	drawCurrentLocation(lat,lng, 'rgb(0,0,0)');

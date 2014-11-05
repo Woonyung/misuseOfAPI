@@ -5,17 +5,51 @@
   src: url(fonts/Gotham-Book.otf);
 }
 body {
+  background-color: #1b1e49;
+  color: white;
   font-family: gotham-book;
   margin: 0;
   padding: 0;
 }
 
+input:focus {
+  outline: 0;
+}
+
+#title {
+  font-size: 12px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+}
+
+#extraMarginTop {
+  height: 13px;
+}
+
+#extraMarginBottom {
+  height: 8px;
+}
+
 /* INPUT AND BUTTON AREAS */
 #buttonArea {
-  background-color: yellow;
+  background-color: #1b1e49;
+  padding: 0 0 0 20px;
 }
 
 /* inputs*/
+#searchTerm {
+  border: 0px solid #006;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  -ms-border-radius: 5px;
+  -o-border-radius: 5px;
+  border-radius: 5px;
+  border: 0px solid #006;
+  background: #fff;
+  height: 28px;
+  width: 100px;
+}
+
 #inputAddress {
   border: 0px solid #006;
   -webkit-border-radius: 5px;
@@ -24,9 +58,9 @@ body {
   -o-border-radius: 5px;
   border-radius: 5px;
   border: 0px solid #006;
-  background: #caf6ee;
+  background: #fff;
+  height: 28px;
   width: 400px;
-  height: 30px;
 }
 
 /* buttons*/
@@ -37,49 +71,63 @@ body {
   -ms-border-radius: 5px;
   -o-border-radius: 5px;
   border-radius: 5px;
-  background-color: green;
+  background-color: #ff5771;
   color: white;
   height: 30px;
+  cursor: pointer;
 }
 
 #currentLoc:hover {
-  background-color: blue;
+  background-color: #dc3b54;
 }
 
 #searchButton {
-  border: 0px solid #006;
-  -webkit-border-radius: 5px;
-  -moz-border-radius: 5px;
-  -ms-border-radius: 5px;
-  -o-border-radius: 5px;
-  border-radius: 5px;
-  background-color: black;
-  color: white;
+  position: absolute;
   height: 30px;
-}
-
-#searchButton:hover {
-  background-color: blue;
+  cursor: pointer;
 }
 
 /* map div for loading maps */
 #map {
   position: absolute;
-  top: 50px;
+  top: 90px;
   bottom: 30px;
   width: 100%;
 }
 
 #infoBox {
   position: absolute;
-  width: 200px;
-  height: 240px;
-  padding: 5px 10px;
-  top: 60px;
-  right: 10px;
-  background: rgba(0, 0, 0, 0.5);
+  width: 230px;
+  height: 260px;
+  padding: 20px 20px;
+  top: 110px;
+  right: 20px;
+  background: rgba(0, 0, 0, 0.6);
   color: #fff;
   font-size: 11px;
   line-height: 18px;
   border-radius: 3px;
+}
+
+.smallTitle {
+  text-transform: uppercase;
+  letter-spacing: 0.3em;
+  font-size: 12px;
+}
+
+#heart {
+  width: 18px;
+  margin-left: auto;
+}
+
+#marker {
+  width: 15px;
+  margin-left: auto;
+}
+
+#footer {
+  font-size: 10px;
+  position: absolute;
+  left: 20px;
+  bottom: 7px;
 }
