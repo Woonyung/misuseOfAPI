@@ -6,13 +6,12 @@ Assignment #2 : misuse of API
 Oct 31th, 2014
 woonyungchoi@gmail.com
 
-09.
+11.
 back to foursquare API - venue
 parsing like counting
 get Foursquare data -> get Like data (id)
 
-sorted only crappy place near me..
-but I wanted to expand as cities...
+sorted only crappy place near me.
 
 */
 
@@ -37,7 +36,10 @@ var CLIENT_SECRET ='-';
 
 // array to store our objects
 var foursquareArray = [];
-var limit = 50; // number of venue that I want to look for 
+var limit = 50; // number of venue that I want to look for maximum: 50
+var intent = 'browse';
+var query = 'food';
+var radius = 10000;
 
 function getFoursquareData(lat, lng){
 	// empty the array 
@@ -48,6 +50,9 @@ function getFoursquareData(lat, lng){
 		//url: baseURL + lat + "," + lng +'&client_id='+ CLIENT_ID+'&client_secret='+ CLIENT_SECRET+'&v=20141101',
 		url: baseURL + 
 			'll='+ lat + "," + lng +
+			'&intent=' + intent +
+			'&query=' + query + 
+			'&radius=' + radius + 
 			'&limit='+ limit+
 			'&client_id='+ CLIENT_ID+'&client_secret='+ CLIENT_SECRET+'&v=20141101',
 		type: 'GET',
@@ -119,8 +124,9 @@ function mapTheData(foursquareArray){
 	console.log(sortedArray); 
 
 	for (var i = 0; i < sortedArray.length; i++){
-		// if like count is less than 5, draw the circle
-		if ( sortedArray[i].likes < 5){
+		//drawVenues(sortedArray[i]);
+		//if like count is less than 10, draw the circle
+		if ( sortedArray[i].likes < 10){
 			// draw points of crappy places
 			drawVenues(sortedArray[i]);
 		}
@@ -131,12 +137,12 @@ function mapTheData(foursquareArray){
 ///////////////////////////////////////////////////////////////////
 /////////////////////////// LOAD THE MAP //////////////////////////
 // draw basic map
-var zoom = 18;
+var zoom = 14;
 
 L.mapbox.accessToken = '-';
 // Create a map in the div #map
 var map = L.mapbox.map('map', '-')
-	.setView([40.73, -74.00], 15); // default view 
+	.setView([40.73, -74.00], zoom); // default view 
 
 
 // Geo Coding - for current location (input)
@@ -164,7 +170,7 @@ function geocodeLocation(address){
 //////// DRAW CURRENT LOCATION
 function drawCurrentLocation(lat,lng, color){
 	map.setView([lat, lng], zoom); // set view
-	var currentCircle = L.circle([lat,lng], 5,{
+	var currentCircle = L.circle([lat,lng], 50,{
 	    stroke: false,
 	    fillColor: color,
 	    fillOpacity: 1
@@ -177,9 +183,9 @@ function drawCurrentLocation(lat,lng, color){
 function drawVenues(crappyVenue){
 	console.log(crappyVenue.likes);
 	//var popupContent = crappyVenue.likes;
-	var currentCircle = L.circle([crappyVenue.location.lat,crappyVenue.location.lng], 3,{
+	var currentCircle = L.circle([crappyVenue.location.lat,crappyVenue.location.lng], 50,{
 	    stroke: false,
-	    fillColor: 'rgb(0,0,0)',
+	    fillColor: 'rgb(0,255,0)',
 	    fillOpacity: 1
 	}).addTo(map)
 	.bindPopup(crappyVenue.name);
