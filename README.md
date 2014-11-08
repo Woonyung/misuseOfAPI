@@ -15,9 +15,6 @@
 
 ##Features that I want to fix more:
 
-* Clearing out the map, whenever user click the submit button again on the same page.
-* Change layout for better user experience - with step by step instruction?
-
 * (maybe on the future) working on direction API from Google, so that users can pick their destination and it will give users “user-friendly direction” to get there. I have tried with parsing Google direction API, but for some reasons, Google does not allow me to use jquery’s ajax request. I have to figure out another way for doing this.
 
 
