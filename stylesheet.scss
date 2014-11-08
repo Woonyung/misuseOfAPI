@@ -10,6 +10,9 @@
 	-o-border-radius: 5px;
 	border-radius: 10px;
 	cursor: pointer;
+
+	color: white;
+	font-family: gotham-light;
 }
 
 @mixin whiteButtonTraits{
@@ -105,6 +108,10 @@ input:focus{
 	font-family:gotham-light;
 }
 
+.caption{
+	font-size: 11px;
+}
+
 #footer{
 	position: absolute;
 	margin-left: $leftMargin;
@@ -167,17 +174,18 @@ input:focus{
 
 #searchButton{
 	@include buttonTraits;
-	color: white;
 	width: 200px;
 	height: 32px;
 
-	// position: absolute;
-	// height: 30px;
 	background-color: $hotPink;
+	color: white;
+	font-family: gotham-book;
+	letter-spacing: 0.2em;
 	cursor: pointer;
 }
 
 #searchButton:hover{
+	background-color: darken($hotPink, 5%);
 }
 
 

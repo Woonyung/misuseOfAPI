@@ -47,6 +47,10 @@ input:focus {
   font-family: gotham-light;
 }
 
+.caption {
+  font-size: 11px;
+}
+
 #footer {
   position: absolute;
   margin-left: 20px;
@@ -146,10 +150,18 @@ input:focus {
   border-radius: 10px;
   cursor: pointer;
   color: white;
+  font-family: gotham-light;
   width: 200px;
   height: 32px;
   background-color: #ff5771;
+  color: white;
+  font-family: gotham-book;
+  letter-spacing: 0.2em;
   cursor: pointer;
+}
+
+#searchButton:hover {
+  background-color: #ff3e5b;
 }
 
 /* map div for loading maps */

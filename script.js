@@ -1,20 +1,19 @@
 /*
-
 Appropriating Interaction Technology
 Assignment #2 : misuse of API 
 
 Oct 31th, 2014
 woonyungchoi@gmail.com
 
-16.
+17.
 - back to foursquare API - venue
 - parsing like counting
 - get Foursquare data -> get Like data (id)
 
 - sorted only crappy place near me.
-- color mapping according to the like count
 - not much change, but changed layout
 - cleared out markers..!!
+- color mapping according to the like count
 */
 
 var mode;
@@ -96,7 +95,6 @@ function getLikeData(tempObject){
 		type: 'GET',
 		dataType: 'jsonp',
 		success: function(data){
-			// push into array
 
 			var myLike = data.response.likes.count;
 			//console.log(data.response.likes.count);
@@ -118,30 +116,19 @@ function getLikeData(tempObject){
 
 }
 
+
 function mapTheData(foursquareArray){
-	//console.log(foursquareArray);
+
 	// sorted objects by descending order of like
 	var sortedArray = foursquareArray.sort(function(a, b){
 		return a.likes-b.likes;
 	});
 
-	// console.log(sortedArray); 
 	// looping through sorted array -> and run function by passing each elements of array
 	for (var i = 0; i < sortedArray.length; i++){
-		// color mapping according to the like counts
 		// and draw crappy places
-		if ( sortedArray[i].likes == 0){
-			drawVenues(sortedArray[i], 'RGB(255,255,255)');
-		} else if ( sortedArray[i].likes < 5){ 
-			drawVenues(sortedArray[i], 'RGB(41, 240, 135)');
-		} else if ( sortedArray[i].likes < 10) {
-			drawVenues(sortedArray[i], 'RGB(192, 253, 91)');
-		} else if ( sortedArray[i].likes < 15) {
-			drawVenues(sortedArray[i], 'RGB(254, 244, 127)');
-		} else if ( sortedArray[i].likes < 20) {
-			drawVenues(sortedArray[i], 'RGB(254, 205, 68)');
-		} else if ( sortedArray[i].likes < 30){
-			drawVenues(sortedArray[i], 'RGB(255, 87, 113)');
+		if ( sortedArray[i].likes < 30){ 
+			drawVenues(sortedArray[i]);
 		}
 	}
 
@@ -211,8 +198,8 @@ function drawCurrentLocation(lat,lng, color){
 }
 
 
-//////// DRAW VENUES NEAR ME
-function drawVenues(crappyVenue, color){
+//////// DRAW VENUES NEAR ME ////////
+function drawVenues(crappyVenue){
 	var address, city;
 	// console.log(crappyVenue);
 	// console.log(crappyVenue.likes);
@@ -233,7 +220,12 @@ function drawVenues(crappyVenue, color){
 		city = crappyVenue.location.city;
 	}
 
-	// map.removeLayer(currentCircle); 
+	/////////////////// MAPPING COLOR //////////////////
+	// import rainbowviz js : and create new instance of Rainbow
+	var rainbow = new Rainbow();
+	rainbow.setSpectrum('#ffffff', '#29F087', '#C0FD5B', '#FEF47F', '#FECD44', '#FF5771');
+	rainbow.setNumberRange(0, 30); // number of crappy venues
+	var color = '#' + rainbow.colourAt(crappyVenue.likes); // map into hex value
 
 	// Draw the venue and display the information on the popup
 	var venueCircle = L.circle([lat,lng], 50,{
@@ -276,10 +268,31 @@ function drawVenues(crappyVenue, color){
 /////////////////////////////////////////////////////////////////
 /////////////////////// when document is ready//////////////////
 $(document).ready(function(){
+
 	// get rid of unecessary borders.. 
-	$("#currentLoc").focus(function(){
-		$(this).blur();
-	});
+	$("#currentLoc").focus(function(){ $(this).blur(); });
+	$("#searchButton").focus(function(){ $(this).blur(); });
+
+	$("#coffee").focus(function(){ $(this).blur(); });
+	$("#pudding").focus(function(){ $(this).blur(); });
+	$("#cupcake").focus(function(){ $(this).blur(); });
+	$("#yogurt").focus(function(){ $(this).blur(); });
+	$("#bubble_tea").focus(function(){ $(this).blur(); });
+	$("#dessert").focus(function(){ $(this).blur(); });
+	$("#icecream").focus(function(){ $(this).blur(); });
+	$("#sandwich").focus(function(){ $(this).blur(); });
+	$("#brunch").focus(function(){ $(this).blur(); });
+
+	// if user is pressed tag, fill out the form
+	$("#coffee").click(function(){ $("#searchTerm").val("coffee"); });
+	$("#pudding").click(function(){ $("#searchTerm").val("pudding"); });
+	$("#cupcake").click(function(){ $("#searchTerm").val("cupcake"); });
+	$("#yogurt").click(function(){ $("#searchTerm").val("yogurt"); });
+	$("#bubble_tea").click(function(){ $("#searchTerm").val("bubble tea"); });
+	$("#dessert").click(function(){ $("#searchTerm").val("dessert"); });
+	$("#icecream").click(function(){ $("#searchTerm").val("ice cream"); });
+	$("#sandwich").click(function(){ $("#searchTerm").val("sandwich"); });
+	$("#brunch").click(function(){ $("#searchTerm").val("brunch"); });
 
 
 	//MODE 1
@@ -303,7 +316,6 @@ $(document).ready(function(){
 
 		if ( mode == 1  ){ // user pressed the currentLoc button
 			console.log("***** MODE1 : USER USED CUREENT LOCATION");
-		 	// [] loading screen/ indication would be needed
 			//console.log("loading current location of computer");
 			bottomPart.innerHTML = "<br><span class='smallTitle'>It's loading</span>";
 
@@ -320,7 +332,7 @@ $(document).ready(function(){
 
 			});
 		} else if( mode == 2 ) {  // OR user manually typed the information
-			//console.log("***** MODE2 : USER MANUALLY TYPED ADDRESS");
+			console.log("***** MODE2 : USER MANUALLY TYPED ADDRESS");
 			geocodeLocation(inputAddress, term);
 
 		} else { // IF USERS DO NOTHING
