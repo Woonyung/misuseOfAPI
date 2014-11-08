@@ -166,22 +166,23 @@ function geocodeLocation(address, term){
 			getFoursquareData(lat,lng, term);
 
 		    // DRAW CURRENT LOCATION
-		    drawCurrentLocation(lat,lng, 'rgb(0,0,0)');
+		    drawCurrentLocation(lat,lng);
 
 		} // end of else if
 	}); // end of geocode query function
 }
 
 //////// DRAW CURRENT LOCATION
-function drawCurrentLocation(lat,lng, color){
+function drawCurrentLocation(lat,lng){
 	map.setView([lat, lng], zoom); // set view
 
-	var currentCircle = L.circle([lat,lng], 50,{
-	    stroke: false,
-	    fillColor: color,
-	    fillOpacity: 1
+	var currentMarker = L.marker([lat, lng], {
+    icon: L.mapbox.marker.icon({
+	      'marker-color': '#EDE8E4'
+	    })
 	}).addTo(map)
 	.bindPopup("current location");
+	// .openPopup();
 
 	// Clear out previous results first
 	// (it should be inside of function scope) 
@@ -192,7 +193,7 @@ function drawCurrentLocation(lat,lng, color){
 	}
 
 	$("#searchButton").on("click", function(){
-		map.removeLayer(currentCircle);
+		map.removeLayer(currentMarker);
 	});
 
 }
@@ -223,7 +224,7 @@ function drawVenues(crappyVenue){
 	/////////////////// MAPPING COLOR //////////////////
 	// import rainbowviz js : and create new instance of Rainbow
 	var rainbow = new Rainbow();
-	rainbow.setSpectrum('#ffffff', '#29F087', '#C0FD5B', '#FEF47F', '#FECD44', '#FF5771');
+	rainbow.setSpectrum('#ffffff','#C0FD5B', '#FEF47F', '#FECD44', '#FF5771');
 	rainbow.setNumberRange(0, 30); // number of crappy venues
 	var color = '#' + rainbow.colourAt(crappyVenue.likes); // map into hex value
 
@@ -328,7 +329,7 @@ $(document).ready(function(){
 				getFoursquareData(lat,lng, term);
 
 				// DRAW CURRENT LOCATION - COMPUTER LOCATION
-		    	drawCurrentLocation(lat,lng, 'rgb(0,0,0)');
+		    	drawCurrentLocation(lat,lng);
 
 			});
 		} else if( mode == 2 ) {  // OR user manually typed the information
