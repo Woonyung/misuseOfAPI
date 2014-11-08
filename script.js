@@ -42,7 +42,7 @@ var limit = 50; // number of venue that I want to look for maximum: 50
 var intent = 'browse';
 var radius = 5000;
 
-function getFoursquareData(lat, lng, query){
+function getFoursquareData(lat, lng, term){
 	// empty the array 
 	foursquareArray = [];
 
@@ -52,7 +52,7 @@ function getFoursquareData(lat, lng, query){
 		url: baseURL + 
 			'll='+ lat + "," + lng +
 			'&intent=' + intent +
-			'&query=' + query + 
+			'&query=' + term + 
 			'&radius=' + radius + 
 			'&limit='+ limit+
 			'&client_id='+ CLIENT_ID+'&client_secret='+ CLIENT_SECRET+'&v=20141101',
@@ -152,14 +152,18 @@ var zoom = 14;
 
 L.mapbox.accessToken = '-';
 // Create a map in the div #map
-var map = L.mapbox.map('map', '-')
+var map = L.mapbox.map('map', 'woonyung1.k47gjle3',{ zoomControl: false })
 	.setView([40.73, -74.00], zoom); // default view 
+// move the place of zoom control to top right
+new L.Control.Zoom({ position: 'topright' }).addTo(map);
 
 
 
 // Geo Coding - for current location (input)
-function geocodeLocation(address){
+function geocodeLocation(address, term){
 	// geocode
+	bottomPart.innerHTML = "<br><span class='smallTitle'>It's loading</span>";
+
 	var geocoder = L.mapbox.geocoder('mapbox.places-v1'); 
 	geocoder.query(address, function(err, data){
 		if (data.lbounds) {
@@ -170,7 +174,7 @@ function geocodeLocation(address){
 			var lng = data.latlng[1];
 
 		    // REQUEST FOURSQUARE DATA
-			getFoursquareData(lat,lng, query);
+			getFoursquareData(lat,lng, term);
 
 		    // DRAW CURRENT LOCATION
 		    drawCurrentLocation(lat,lng, 'rgb(0,0,0)');
@@ -250,7 +254,6 @@ $(document).ready(function(){
 		$(this).blur();
 	});
 
-	console.log("???");
 
 	//MODE 1
 	$("#currentLoc").click(function(){
@@ -264,7 +267,7 @@ $(document).ready(function(){
 
 		// MODE 2 
 		// getting input values 
-		var query = $("#searchTerm").val();
+		var term = $("#searchTerm").val();
 		var inputAddress = $("#inputAddress").val();
 		if(inputAddress!== '' ){ 
 			mode = 2;
@@ -283,7 +286,7 @@ $(document).ready(function(){
 				var lng = location.coords.longitude;
 
 				// REQUEST FOURSQUARE DATA
-				getFoursquareData(lat,lng, query);
+				getFoursquareData(lat,lng, term);
 
 				// DRAW CURRENT LOCATION - COMPUTER LOCATION
 		    	drawCurrentLocation(lat,lng, 'rgb(0,0,0)');
@@ -291,7 +294,7 @@ $(document).ready(function(){
 			});
 		} else if( mode == 2 ) {  // OR user manually typed the information
 			//console.log("***** MODE2 : USER MANUALLY TYPED ADDRESS");
-			geocodeLocation(inputAddress);
+			geocodeLocation(inputAddress, term);
 
 			// if ( nothingFounded ){
 			// 	console.log("***** you should set your address");

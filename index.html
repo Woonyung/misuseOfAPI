@@ -7,6 +7,9 @@
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width">
     </head>
+    <!-- my stylesheet -->
+    <link rel="stylesheet" type="text/css" href="stylesheet.css">
+
     <!-- javascript library -->
     <!-- jQuery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
@@ -18,27 +21,8 @@
     <script src='https://api.tiles.mapbox.com/mapbox.js/v2.1.2/mapbox.js'></script>
     <link href='https://api.tiles.mapbox.com/mapbox.js/v2.1.2/mapbox.css' rel='stylesheet' />
 
-    <!-- my stylesheet -->
-    <link rel="stylesheet" type="text/css" href="stylesheet.css">
-
     <body>
-<!--         <img src="img/heart.png" id="logo"> -->
-        <div id="buttonArea">
-            <div id="extraMarginTop"></div>
-            <span id="title">I will suggest places that no one likes</span><br>
-            <div id="extraMarginBottom"></div>
 
-            <input type="text" id="searchTerm" placeholder="I'm Looking for...">
-
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <button id="currentLoc">use current location</button> OR 
-            <input type="text" id="inputAddress" placeholder="address">
-            <img id="searchButton" src="img/search.png">
-            <!-- <button id="searchButton">TELL ME</button> -->
-
-            <br>
-            <br>   
-        </div>
         <div id="map"></div>
         <div id="infoBox">
             <div id="topPart">
@@ -49,10 +33,59 @@
             <div id="bottomPart"></div>
         </div>
 
-        <div id="footer">
-            This project is done for assignment, so this app is not intented to insult or hurt people.
-            code is done by Woonyung Choi.
+        <!--         <img src="img/heart.png" id="logo"> -->
+        <div id="buttonArea">
+            <div class="extraMarginTop"></div>
+            <span class="title">
+            I will suggest places
+            <br>
+            that no one likes</span>
+            <br>
+            <div class="marginSpaceLarge"></div>
+
+            <span class="smallType">Instruction</span>
+            <br>
+            <br>
+            <span class="description">
+            1. Type the item that you want to search for
+            </span>
+            <br>
+            <br>
+            <input type="text" id="searchTerm" placeholder="I'm Looking for...">
+            <div class="marginSpaceX_small"></div>
+
+            <!-- tags -->
+            <button class="tag">coffee</button>
+            <button class="tag">pudding</button>
+            <button class="tag">cupcakes</button>
+            <button class="tag">yogurt</button>
+    
+             <!-- ///////////////////////// -->
+            <div class="marginSpaceSmall"></div>
+    
+            <span class="description">
+            2. Choose starting point - <br>
+            either using current location of browser 
+            <br>
+            or typing address manually.
+            </span>
+
+            <br>
+            <br>
+
+            <button id="currentLoc">use current location</button>
+            <span class="description">or</span>
+            <div class="marginSpaceX_small"></div>
+            <input type="text" id="inputAddress" placeholder="address">
+           <!--  <img id="searchButton" src="img/search.png"> -->
+            <div class="marginSpaceSmall"></div>
+            <button id="searchButton">TELL ME</button>
+    
         </div>
+        <!-- //////////// FOOTER ///////////// -->
+        <div id="footer">
+            :)
+        </div>  
     </body>
         
     <!-- main js -->

@@ -4,8 +4,11 @@
   font-family: gotham-book;
   src: url(fonts/Gotham-Book.otf);
 }
+@font-face {
+  font-family: gotham-light;
+  src: url(fonts/Gotham-Light.otf);
+}
 body {
-  background-color: #1b1e49;
   color: white;
   font-family: gotham-book;
   margin: 0;
@@ -16,24 +19,51 @@ input:focus {
   outline: 0;
 }
 
-#title {
-  font-size: 12px;
+/* INPUT AND BUTTON AREAS */
+#buttonArea {
+  position: absolute;
+  /* so that it will be placed on to the top*/
+  width: 300px;
+  height: 100%;
+  float: left;
+  padding: 70px 20px 0 20px;
+  background-color: RGBA(27, 30, 73, 0.7);
+}
+
+.title {
+  font-size: 13px;
   letter-spacing: 0.3em;
   text-transform: uppercase;
 }
 
-#extraMarginTop {
-  height: 13px;
+.smallType {
+  font-size: 11px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
 }
 
-#extraMarginBottom {
-  height: 8px;
+.description {
+  font-size: 12px;
+  font-family: gotham-light;
 }
 
-/* INPUT AND BUTTON AREAS */
-#buttonArea {
-  background-color: #1b1e49;
-  padding: 0 0 0 20px;
+#footer {
+  position: absolute;
+  margin-left: 20px;
+  bottom: 20px;
+}
+
+/* Margins */
+.marginSpaceLarge {
+  height: 70px;
+}
+
+.marginSpaceSmall {
+  height: 50px;
+}
+
+.marginSpaceX_small {
+  height: 10px;
 }
 
 /* inputs*/
@@ -43,10 +73,11 @@ input:focus {
   -moz-border-radius: 5px;
   -ms-border-radius: 5px;
   -o-border-radius: 5px;
-  border-radius: 5px;
-  border: 0px solid #006;
+  border-radius: 10px;
   background: #fff;
   height: 28px;
+  font-family: gotham-light;
+  font-size: 11px;
   width: 100px;
 }
 
@@ -56,42 +87,76 @@ input:focus {
   -moz-border-radius: 5px;
   -ms-border-radius: 5px;
   -o-border-radius: 5px;
-  border-radius: 5px;
-  border: 0px solid #006;
+  border-radius: 10px;
   background: #fff;
   height: 28px;
-  width: 400px;
+  font-family: gotham-light;
+  font-size: 11px;
+  width: 250px;
 }
 
 /* buttons*/
+.tag {
+  border: 0px solid #006;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  -ms-border-radius: 5px;
+  -o-border-radius: 5px;
+  border-radius: 10px;
+  cursor: pointer;
+  background-color: RGBA(255, 255, 255, 0.3);
+  color: white;
+  font-family: gotham-light;
+  font-size: 13px;
+  font-variant: small-caps;
+  letter-spacing: 0.1em;
+}
+
+.tag:hover {
+  background-color: RGBA(255, 255, 255, 0.4);
+}
+
 #currentLoc {
   border: 0px solid #006;
   -webkit-border-radius: 5px;
   -moz-border-radius: 5px;
   -ms-border-radius: 5px;
   -o-border-radius: 5px;
-  border-radius: 5px;
-  background-color: #ff5771;
-  color: white;
-  height: 30px;
+  border-radius: 10px;
   cursor: pointer;
+  background-color: RGBA(255, 255, 255, 0.3);
+  color: white;
+  font-family: gotham-light;
+  font-size: 13px;
+  font-variant: small-caps;
+  letter-spacing: 0.1em;
+  height: 30px;
 }
 
 #currentLoc:hover {
-  background-color: #dc3b54;
+  background-color: RGBA(255, 255, 255, 0.4);
 }
 
 #searchButton {
-  position: absolute;
-  height: 30px;
+  border: 0px solid #006;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  -ms-border-radius: 5px;
+  -o-border-radius: 5px;
+  border-radius: 10px;
+  cursor: pointer;
+  color: white;
+  width: 200px;
+  height: 32px;
+  background-color: #ff5771;
   cursor: pointer;
 }
 
 /* map div for loading maps */
 #map {
   position: absolute;
-  top: 90px;
-  bottom: 30px;
+  top: 0;
+  bottom: 0;
   width: 100%;
 }
 
@@ -100,7 +165,7 @@ input:focus {
   width: 230px;
   height: 260px;
   padding: 20px 20px;
-  top: 110px;
+  top: 90px;
   right: 20px;
   background: rgba(0, 0, 0, 0.6);
   color: #fff;
@@ -123,11 +188,4 @@ input:focus {
 #marker {
   width: 15px;
   margin-left: auto;
-}
-
-#footer {
-  font-size: 10px;
-  position: absolute;
-  left: 20px;
-  bottom: 7px;
 }

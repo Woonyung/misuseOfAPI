@@ -8,22 +8,49 @@
 	-moz-border-radius: 5px;
 	-ms-border-radius: 5px;
 	-o-border-radius: 5px;
-	border-radius: 5px;
+	border-radius: 10px;
+	cursor: pointer;
+}
+
+@mixin whiteButtonTraits{
+	border: 0px solid #006;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	-ms-border-radius: 5px;
+	-o-border-radius: 5px;
+	border-radius: 10px;
+	cursor: pointer;
+	
+	background-color: RGBA(255,255,255,0.3);
+	color: white;
+	font-family: gotham-light;
+
 }
 
 @mixin inputTraits{
 	border: 0px solid #006;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	-ms-border-radius: 5px;
+	-o-border-radius: 5px;
+	border-radius: 10px;
+
     background: #fff;
 	height: 28px;
+	
+	font-family: gotham-light;
+	font-size: 11px;
 }
 /////////////////////////////////
 // VARIABLES FOR MAPs
-$topMargin: 90px;
+$topMargin: 70px;
 $bottomMargin: 30px;
 $leftMargin: 20px;
 
-$darkBlue: #1b1e49;
+$darkBlue: RGBA(27, 30, 73, 0.7);
+$darkGray: rgba(0,0,0,0.6);
 $hotPink: #ff5771;
+
 
 /////////////////////////////////////////
 /* load the font face from local machine */
@@ -32,9 +59,13 @@ $hotPink: #ff5771;
     src: url(fonts/Gotham-Book.otf);
 }
 
+@font-face{
+	font-family: gotham-light;
+	src: url(fonts/Gotham-Light.otf);
+}
+
 
 body{
-	background-color: $darkBlue;
 	color: white;
 	font-family: gotham-book;
 	margin:0; padding:0; // full screen
@@ -45,84 +76,117 @@ input:focus{
 }
 
 ///////////////////////////////////////
-#title{
-	font-size: 12px;
+////////////////////////////////////
+/* INPUT AND BUTTON AREAS */
+#buttonArea{
+	position: absolute; /* so that it will be placed on to the top*/
+	width: 300px;
+	height: 100%;
+	float: left;
+	padding: $topMargin $leftMargin 0 $leftMargin;
+	background-color: $darkBlue;
+	// padding: 0 0 0 $leftMargin;
+}
+
+.title{
+	font-size: 13px;
 	letter-spacing: 0.3em;
 	text-transform: uppercase;
 }
 
-// #logo{
-// 	width: 30px;
-// 	left: 10px;
-// 	top: 11px;
-// 	position: absolute;
-// }
-
-#extraMarginTop{
-	height: 13px;
-	// background-color:red;
+.smallType{
+	font-size: 11px;
+	letter-spacing: 0.3em;
+	text-transform: uppercase;
 }
 
-#extraMarginBottom{
-	height: 8px;
-	// background-color:red;
+.description{
+	font-size: 12px;
+	font-family:gotham-light;
 }
 
-
-/* INPUT AND BUTTON AREAS */
-#buttonArea{
-	background-color: $darkBlue;
-	padding: 0 0 0 $leftMargin;
+#footer{
+	position: absolute;
+	margin-left: $leftMargin;
+	bottom: $leftMargin;
 }
 
+//////////////////////////////////
+/* Margins */
 
+.marginSpaceLarge{
+	height: 70px;
+}
+
+.marginSpaceSmall{
+	height: 50px;
+}
+
+.marginSpaceX_small{
+	height: 10px;
+}
+
+//////////////////////////////////
 /* inputs*/
 #searchTerm{
-	@include buttonTraits;
 	@include inputTraits;
 	width: 100px;
 }
 
 #inputAddress{
-	@include buttonTraits;
 	@include inputTraits;
-    width: 400px;
+    width: 250px;
 }
 
+
 /* buttons*/
+
+.tag{
+	@include whiteButtonTraits;
+	font-size: 13px;
+	font-variant: small-caps;
+	letter-spacing: 0.1em;
+}
+
+.tag:hover{
+	background-color: RGBA(255,255,255,0.4);
+}
+
 #currentLoc{
-	@include buttonTraits;
-	background-color: $hotPink;
-	color: white;
+	@include whiteButtonTraits;
+	font-size: 13px;
+	font-variant: small-caps;
+	letter-spacing: 0.1em;
 	height: 30px;
-	cursor: pointer;
 }
 
 #currentLoc:hover{
-	background-color: #dc3b54;
+	background-color: RGBA(255,255,255,0.4);
 }
 
 
 #searchButton{
-	// @include buttonTraits;
-	// background-color: $hotPink;
-	// color: white;
-	// height: 32px;
+	@include buttonTraits;
+	color: white;
+	width: 200px;
+	height: 32px;
 
-	position: absolute;
-	height: 30px;
+	// position: absolute;
+	// height: 30px;
+	background-color: $hotPink;
 	cursor: pointer;
 }
 
 #searchButton:hover{
-	// background-color: blue;
 }
+
 
 ///////////////////////////////////////
 /* map div for loading maps */ 
 #map {
 	position:absolute; 
-	top: $topMargin; bottom: $bottomMargin; 
+	top: 0;
+	bottom: 0;
 	width: 100%;
 }
 
@@ -160,12 +224,5 @@ input:focus{
 
 #bottomPart{
 
-}
-///////////////////////////////
-#footer{
-	font-size: 10px;
-	position: absolute;
-	left: $leftMargin;
-	bottom: 7px;
 }
 
