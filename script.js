@@ -6,13 +6,15 @@ Assignment #2 : misuse of API
 Oct 31th, 2014
 woonyungchoi@gmail.com
 
-12.
+16.
 - back to foursquare API - venue
 - parsing like counting
 - get Foursquare data -> get Like data (id)
 
 - sorted only crappy place near me.
 - color mapping according to the like count
+- not much change, but changed layout
+- cleared out markers..!!
 */
 
 var mode;
@@ -194,6 +196,18 @@ function drawCurrentLocation(lat,lng, color){
 	}).addTo(map)
 	.bindPopup("current location");
 
+	// Clear out previous results first
+	// (it should be inside of function scope) 
+	function deleteCircles(myid){
+		console.log("function is running");
+		map.removeLayer(myid);
+		return false;
+	}
+
+	$("#searchButton").on("click", function(){
+		map.removeLayer(currentCircle);
+	});
+
 }
 
 
@@ -222,7 +236,7 @@ function drawVenues(crappyVenue, color){
 	// map.removeLayer(currentCircle); 
 
 	// Draw the venue and display the information on the popup
-	currentCircle = L.circle([lat,lng], 50,{
+	var venueCircle = L.circle([lat,lng], 50,{
 	    stroke: false,
 	    fillColor: color,
 	    fillOpacity: 1
@@ -240,15 +254,28 @@ function drawVenues(crappyVenue, color){
 								+ city;
 	})
 	.addTo(map);
-	// .bindPopup(crappyVenue.name);
+
+
+	// Clear out previous results first
+	// (it should be inside of function scope) 
+	function deleteCircles(myid){
+		console.log("function is running");
+		map.removeLayer(myid);
+		return false;
+	}
+
+	$("#searchButton").on("click", function(){
+		map.removeLayer(venueCircle);
+	});
+
 }
+
+
 
 
 /////////////////////////////////////////////////////////////////
 /////////////////////// when document is ready//////////////////
 $(document).ready(function(){
-
-
 	// get rid of unecessary borders.. 
 	$("#currentLoc").focus(function(){
 		$(this).blur();
@@ -295,12 +322,6 @@ $(document).ready(function(){
 		} else if( mode == 2 ) {  // OR user manually typed the information
 			//console.log("***** MODE2 : USER MANUALLY TYPED ADDRESS");
 			geocodeLocation(inputAddress, term);
-
-			// if ( nothingFounded ){
-			// 	console.log("***** you should set your address");
-			// } else {
-			// 	geocodeLocation(inputAddress);
-			// }
 
 		} else { // IF USERS DO NOTHING
 			console.log("***** you should set your address");
