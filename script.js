@@ -14,6 +14,7 @@ woonyungchoi@gmail.com
 - not much change, but changed layout
 - cleared out markers..!!
 - color mapping according to the like count
+- added zoom control : maxZoom / minZoom
 */
 
 var mode;
@@ -147,8 +148,12 @@ var zoom = 14;
 
 L.mapbox.accessToken = '-';
 // Create a map in the div #map
-var map = L.mapbox.map('map', 'woonyung1.k47gjle3',{ zoomControl: false })
-	.setView([40.73, -74.00], zoom); // default view 
+var map = L.mapbox.map('map', 'woonyung1.k47gjle3',{ 
+	zoomControl: false,
+	minZoom:13,
+	maxZoom:16
+})
+.setView([40.73, -74.00], zoom); // default view 
 // move the place of zoom control to top right
 new L.Control.Zoom({ position: 'topright' }).addTo(map);
 
