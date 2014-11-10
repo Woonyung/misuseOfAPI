@@ -3,7 +3,7 @@
 
 [ work-in-progress]
 
-* This project is for the assignment for the class, [Appropriating Interaction Technology](https://github.com/lmccart/AppropriatingInteractionTechnologies), taught by Kyle McDonald and Lauren McCarthy
+* This project starts from the assignment for the class, [Appropriating Interaction Technology](https://github.com/lmccart/AppropriatingInteractionTechnologies), taught by Kyle McDonald and Lauren McCarthy
 
 
 * Actual project can be seen [here](http://woonyungchoi.com/AIT/week2/).
