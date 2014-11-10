@@ -3,7 +3,7 @@
 
 [ work-in-progress]
 
-* This project starts from the assignment for the class, [Appropriating Interaction Technology](https://github.com/lmccart/AppropriatingInteractionTechnologies), taught by Kyle McDonald and Lauren McCarthy
+* This project starts from the assignment for the class, [Appropriating Interaction Technology](https://github.com/lmccart/AppropriatingInteractionTechnologies)–taught by Kyle McDonald and Lauren McCarthy and [Data Art](https://github.com/blprnt/dataart)– taught by Jer Thorp.
 
 
 * Actual project can be seen [here](http://woonyungchoi.com/AIT/week2/).
@@ -14,6 +14,9 @@
 
 
 ##Features that I want to fix more:
+
+* combining with restaurant rating data
+* adding photos of that specific places(?)
 
 * (maybe on the future) working on direction API from Google, so that users can pick their destination and it will give users “user-friendly direction” to get there. I have tried with parsing Google direction API, but for some reasons, Google does not allow me to use jquery’s ajax request. I have to figure out another way for doing this.
 
