@@ -31,6 +31,12 @@ function FoursqaureData(id, name, location, checkin){
 
 }
 
+//////////////////////// MAPPING COLOR //////////////////
+// import rainbowviz js : and create new instance of Rainbow
+var rainbow = new Rainbow();
+rainbow.setSpectrum('#ffffff','#C0FD5B', '#FEF47F', '#FECD44', '#FF5771');
+
+
 ///////////////////////////////////////////////////////////
 ////////////////////  Foursquare keys  //////////////////
 var CLIENT_ID ='-';
@@ -222,9 +228,7 @@ function drawVenues(crappyVenue){
 	}
 
 	/////////////////// MAPPING COLOR //////////////////
-	// import rainbowviz js : and create new instance of Rainbow
-	var rainbow = new Rainbow();
-	rainbow.setSpectrum('#ffffff','#C0FD5B', '#FEF47F', '#FECD44', '#FF5771');
+	// set range 
 	rainbow.setNumberRange(0, 30); // number of crappy venues
 	var color = '#' + rainbow.colourAt(crappyVenue.likes); // map into hex value
 
@@ -270,6 +274,15 @@ function drawVenues(crappyVenue){
 /////////////////////// when document is ready//////////////////
 $(document).ready(function(){
 
+	// Color indication 
+	rainbow.setNumberRange(0, 5); 
+	var s = '';
+	for ( var i = 0; i <= 5; i++){
+		var color = '#' + rainbow.colourAt(i); // map into hex value
+		s += '<span class="bullet" style="color:' + color + '">' + '&#8226;' + '</span>';
+	}
+	document.getElementById("indication").innerHTML = s;
+
 	// get rid of unecessary borders.. 
 	$("#currentLoc").focus(function(){ $(this).blur(); });
 	$("#searchButton").focus(function(){ $(this).blur(); });
@@ -282,7 +295,7 @@ $(document).ready(function(){
 	$("#dessert").focus(function(){ $(this).blur(); });
 	$("#icecream").focus(function(){ $(this).blur(); });
 	$("#sandwich").focus(function(){ $(this).blur(); });
-	$("#brunch").focus(function(){ $(this).blur(); });
+	$("#noodle").focus(function(){ $(this).blur(); });
 
 	// if user is pressed tag, fill out the form
 	$("#coffee").click(function(){ $("#searchTerm").val("coffee"); });
@@ -293,7 +306,7 @@ $(document).ready(function(){
 	$("#dessert").click(function(){ $("#searchTerm").val("dessert"); });
 	$("#icecream").click(function(){ $("#searchTerm").val("ice cream"); });
 	$("#sandwich").click(function(){ $("#searchTerm").val("sandwich"); });
-	$("#brunch").click(function(){ $("#searchTerm").val("brunch"); });
+	$("#noodle").click(function(){ $("#searchTerm").val("noodle"); });
 
 
 	//MODE 1

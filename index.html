@@ -29,8 +29,13 @@
         <div id="map"></div>
         <div id="infoBox">
             <div id="topPart">
-            To see the detail information, <br>
-            hover on the spot
+
+            <span class="small_description">
+                &#160;less&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;more
+            </span>
+            <div id="indication"></div>
+
+            Hover on spots to see detail information <br>
             </div>
             <br>
             <div id="bottomPart"></div>
@@ -38,19 +43,18 @@
 
         <!--         <img src="img/heart.png" id="logo"> -->
         <div id="buttonArea">
-            <div class="extraMarginTop"></div>
             <span class="title">
             I will suggest places
             <br>
             that no one likes</span>
             <br>
-            <div class="marginSpaceLarge"></div>
+            <div class="marginSpaceX_small"></div>
+            <br>
+            <br>
 
-            <span class="smallType">Instruction</span>
-            <br>
-            <br>
+            <span class="smallType">step 1</span><br>
             <span class="description">
-            1. Type the item that you want to search for
+            Type the item that you want to search for
             </span>
             <br>
             <br>
@@ -66,13 +70,14 @@
             <button class="tag" id="dessert">dessert</button>
             <button class="tag" id="icecream">ice cream</button>
             <button class="tag" id="sandwich">sandwich</button>
-            <button class="tag" id="brunch">brunch</button>
+            <button class="tag" id="noodle">noodle</button>
 
              <!-- ///////////////////////// -->
-            <div class="marginSpaceSmall"></div>
+            <div class="marginSpaceMedium"></div>
     
+            <span class="smallType">step 2</span><br>
             <span class="description">
-            2. Choose starting point - <br>
+            Choose starting point - <br>
             either using current location of browser 
             <br>
             or typing address manually.
@@ -85,15 +90,20 @@
             <span class="description">or</span>
             <div class="marginSpaceX_small"></div>
             <input type="text" id="inputAddress" placeholder="address">
-           <!--  <img id="searchButton" src="img/search.png"> -->
-            <div class="marginSpaceSmall"></div>
-            <button id="searchButton">TELL ME</button>
+            <div class="marginSpaceMedium"></div>
+            <button id="searchButton">SEARCH PLACE</button>
+
+            <div class="marginSpaceMedium"></div>
+
+            <!-- <span class="small_description">&#160;LIKE COUNTS</span> -->
+            <br>
     
         </div>
         <!-- //////////// FOOTER ///////////// -->
         <div id="footer">
-        <span class="caption">:)</span>
-        </div>  
+        <span class="caption">
+            <a href="https://github.com/Woonyung/misuseOfAPI" target="_blank">:)</a>
+        </span>
     </body>
         
     <!-- main js -->

@@ -46,7 +46,7 @@
 }
 /////////////////////////////////
 // VARIABLES FOR MAPs
-$topMargin: 70px;
+$topMargin: 60px;
 $bottomMargin: 30px;
 $leftMargin: 20px;
 
@@ -77,6 +77,27 @@ body{
 input:focus{
     outline: 0;
 }
+
+
+a:link {
+    color:#fff;
+    text-decoration:none;
+}
+
+a:visited {
+    color:#fff;
+    text-decoration:none;
+}
+
+a:hover {
+    color:$hotPink;
+}
+
+a:active {
+    color:#fff;
+    text-decoration:none;
+}
+
 
 ///////////////////////////////////////
 ////////////////////////////////////
@@ -112,6 +133,12 @@ input:focus{
 	font-size: 11px;
 }
 
+.small_description{
+	font-size: 10px;
+	font-family: gotham-light;
+	letter-spacing: 0.1em;
+}
+
 #footer{
 	position: absolute;
 	margin-left: $leftMargin;
@@ -125,8 +152,12 @@ input:focus{
 	height: 70px;
 }
 
-.marginSpaceSmall{
+.marginSpaceMedium{
 	height: 50px;
+}
+
+.marginSpaceSmall{
+	height: 30px;
 }
 
 .marginSpaceX_small{
@@ -145,6 +176,14 @@ input:focus{
     width: 250px;
 }
 
+#indication{
+	font-family: Gotham-Light;
+	font-size: 13px;
+}
+
+.bullet{
+	font-size: 48px;
+}
 
 /* buttons*/
 
@@ -201,7 +240,7 @@ input:focus{
 #infoBox{
 	position: absolute;
 	width: 230px;
-	height: 260px;
+	height: 300px;
 	padding: 20px 20px;
 
 	top: $topMargin + 20px;

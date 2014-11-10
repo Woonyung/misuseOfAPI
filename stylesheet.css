@@ -19,6 +19,25 @@ input:focus {
   outline: 0;
 }
 
+a:link {
+  color: #fff;
+  text-decoration: none;
+}
+
+a:visited {
+  color: #fff;
+  text-decoration: none;
+}
+
+a:hover {
+  color: #ff5771;
+}
+
+a:active {
+  color: #fff;
+  text-decoration: none;
+}
+
 /* INPUT AND BUTTON AREAS */
 #buttonArea {
   position: absolute;
@@ -26,7 +45,7 @@ input:focus {
   width: 300px;
   height: 100%;
   float: left;
-  padding: 70px 20px 0 20px;
+  padding: 60px 20px 0 20px;
   background-color: RGBA(27, 30, 73, 0.7);
 }
 
@@ -51,6 +70,12 @@ input:focus {
   font-size: 11px;
 }
 
+.small_description {
+  font-size: 10px;
+  font-family: gotham-light;
+  letter-spacing: 0.1em;
+}
+
 #footer {
   position: absolute;
   margin-left: 20px;
@@ -62,8 +87,12 @@ input:focus {
   height: 70px;
 }
 
-.marginSpaceSmall {
+.marginSpaceMedium {
   height: 50px;
+}
+
+.marginSpaceSmall {
+  height: 30px;
 }
 
 .marginSpaceX_small {
@@ -97,6 +126,15 @@ input:focus {
   font-family: gotham-light;
   font-size: 11px;
   width: 250px;
+}
+
+#indication {
+  font-family: Gotham-Light;
+  font-size: 13px;
+}
+
+.bullet {
+  font-size: 48px;
 }
 
 /* buttons*/
@@ -175,9 +213,9 @@ input:focus {
 #infoBox {
   position: absolute;
   width: 230px;
-  height: 260px;
+  height: 300px;
   padding: 20px 20px;
-  top: 90px;
+  top: 80px;
   right: 20px;
   background: rgba(0, 0, 0, 0.6);
   color: #fff;
