@@ -15,6 +15,8 @@ woonyungchoi@gmail.com
 - cleared out markers..!!
 - color mapping according to the like count
 - added zoom control : maxZoom / minZoom
+
+map.getZoom()
 */
 
 var mode;
@@ -134,7 +136,7 @@ function mapTheData(foursquareArray){
 	// looping through sorted array -> and run function by passing each elements of array
 	for (var i = 0; i < sortedArray.length; i++){
 		// and draw crappy places
-		if ( sortedArray[i].likes < 30){ 
+		if ( sortedArray[i].likes < 50){ 
 			drawVenues(sortedArray[i]);
 		}
 	}
@@ -151,12 +153,11 @@ L.mapbox.accessToken = '-';
 var map = L.mapbox.map('map', 'woonyung1.k47gjle3',{ 
 	zoomControl: false,
 	minZoom:13,
-	maxZoom:16
+	maxZoom:15
 })
 .setView([40.73, -74.00], zoom); // default view 
 // move the place of zoom control to top right
 new L.Control.Zoom({ position: 'topright' }).addTo(map);
-
 
 
 // Geo Coding - for current location (input)
@@ -234,7 +235,7 @@ function drawVenues(crappyVenue){
 
 	/////////////////// MAPPING COLOR //////////////////
 	// set range 
-	rainbow.setNumberRange(0, 30); // number of crappy venues
+	rainbow.setNumberRange(0, 50); // number of crappy venues
 	var color = '#' + rainbow.colourAt(crappyVenue.likes); // map into hex value
 
 	// Draw the venue and display the information on the popup
@@ -278,6 +279,12 @@ function drawVenues(crappyVenue){
 /////////////////////////////////////////////////////////////////
 /////////////////////// when document is ready//////////////////
 $(document).ready(function(){
+	
+	// if close button is pressed, hide pop up div
+	$("#close").click(function(){
+		$("#covered").fadeOut('slow');
+		$("#instruction").fadeOut('slow');
+	});
 
 	// Color indication 
 	rainbow.setNumberRange(0, 5); 
