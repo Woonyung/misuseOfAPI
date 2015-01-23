@@ -14,7 +14,7 @@
 
 * Since I am using Foursquare API, I borrowed Foursquare-like color scheme in Adobe Kuler.
 
-* Actual project can be seen [here](http://woonyungchoi.com/AIT/week2/):kissing::kissing:
+* Actual project can be seen [here](http://placesnoonelikes.herokuapp.com/):kissing::kissing:
 
 ##Features that I want to fix more:
 

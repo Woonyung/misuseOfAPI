@@ -88,28 +88,27 @@ body{
 	margin:0; padding:0; // full screen
 }
 
+
 input:focus{
     outline: 0;
 }
 
-
-a:link {
-    color:#fff;
-    text-decoration:none;
-}
-
-a:visited {
-    color:#fff;
-    text-decoration:none;
-}
-
-a:hover {
-    color:$hotPink;
-}
-
-a:active {
-    color:#fff;
-    text-decoration:none;
+a{
+	&:link{
+		color:#fff;
+    	text-decoration:none;
+	}
+	&:hover{
+		color:$hotPink;
+	}
+	&:visited{
+		color:#fff;
+    	text-decoration:none;
+	}
+	&:active{
+		color:#fff;
+		text-decoration:none;
+	}
 }
 
 
@@ -124,6 +123,7 @@ a:active {
 	padding: $topMargin $leftMargin 0 $leftMargin;
 	background-color: $darkBlue;
 	// padding: 0 0 0 $leftMargin;
+	// 
 }
 
 .title{
@@ -206,11 +206,12 @@ a:active {
 	font-size: 13px;
 	font-variant: small-caps;
 	letter-spacing: 0.1em;
+
+	&:hover{
+		background-color: RGBA(255,255,255,0.4);
+	}
 }
 
-.tag:hover{
-	background-color: RGBA(255,255,255,0.4);
-}
 
 #currentLoc{
 	@include whiteButtonTraits;
@@ -218,11 +219,12 @@ a:active {
 	font-variant: small-caps;
 	letter-spacing: 0.1em;
 	height: 30px;
+
+	&:hover{
+		background-color: RGBA(255,255,255,0.4);
+	}
 }
 
-#currentLoc:hover{
-	background-color: RGBA(255,255,255,0.4);
-}
 
 
 #searchButton{
@@ -235,11 +237,12 @@ a:active {
 	font-family: gotham-book;
 	letter-spacing: 0.2em;
 	cursor: pointer;
+
+	&:hover{
+		background-color: darken($hotPink, 5%);
+	}
 }
 
-#searchButton:hover{
-	background-color: darken($hotPink, 5%);
-}
 
 
 ///////////////////////////////////////
@@ -282,17 +285,21 @@ a:active {
 	font-family: gotham-thin;
 	font-size: 34px;
 	color: $darkBlue;
+
+	&:hover{
+		color: $hotPink;
+	}
 }
 
 #caption a{
 	font-family: gotham-book;
 	color: $darkBlue;
+
+	&:hover{
+		color: $hotPink;
+	}
 }
 
-#close a:hover,
-#caption a:hover{
-	color: $hotPink;
-}
 
 
 #caption{

@@ -27,16 +27,13 @@ a:link {
   color: #fff;
   text-decoration: none;
 }
-
+a:hover {
+  color: #ff5771;
+}
 a:visited {
   color: #fff;
   text-decoration: none;
 }
-
-a:hover {
-  color: #ff5771;
-}
-
 a:active {
   color: #fff;
   text-decoration: none;
@@ -157,7 +154,6 @@ a:active {
   font-variant: small-caps;
   letter-spacing: 0.1em;
 }
-
 .tag:hover {
   background-color: RGBA(255, 255, 255, 0.4);
 }
@@ -178,7 +174,6 @@ a:active {
   letter-spacing: 0.1em;
   height: 30px;
 }
-
 #currentLoc:hover {
   background-color: RGBA(255, 255, 255, 0.4);
 }
@@ -201,7 +196,6 @@ a:active {
   letter-spacing: 0.2em;
   cursor: pointer;
 }
-
 #searchButton:hover {
   background-color: #ff3e5b;
 }
@@ -245,13 +239,15 @@ a:active {
   font-size: 34px;
   color: RGBA(27, 30, 73, 0.7);
 }
+#close:hover,
+#close a:hover {
+  color: #ff5771;
+}
 
 #caption a {
   font-family: gotham-book;
   color: RGBA(27, 30, 73, 0.7);
 }
-
-#close a:hover,
 #caption a:hover {
   color: #ff5771;
 }
