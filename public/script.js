@@ -2,26 +2,18 @@
 Appropriating Interaction Technology
 Assignment #2 : misuse of API 
 
-Oct 31th, 2014
+Jan 31st, 2015
 woonyungchoi@gmail.com
 
-17.
-- back to foursquare API - venue
-- parsing like counting
-- get Foursquare data -> get Like data (id)
-
-- sorted only crappy place near me.
-- not much change, but changed layout
-- cleared out markers..!!
-- color mapping according to the like count
-- added zoom control : maxZoom / minZoom
-
-map.getZoom()
+- added likes maximum
+- fixed geocode problem
 */
 
 var mode;
 var responseLength = -1;
 var currentCircle;
+
+var maxLikes = 100;
 
 // Foursqaure Data
 function FoursqaureData(id, name, location, checkin){
@@ -42,8 +34,8 @@ rainbow.setSpectrum('#ffffff','#C0FD5B', '#FEF47F', '#FECD44', '#FF5771');
 
 ///////////////////////////////////////////////////////////
 ////////////////////  Foursquare keys  //////////////////
-var CLIENT_ID ='-';
-var CLIENT_SECRET ='-';
+var CLIENT_ID ='----';
+var CLIENT_SECRET ='----';
 
 
 // array to store our objects
@@ -51,6 +43,23 @@ var foursquareArray = [];
 var limit = 50; // number of venue that I want to look for maximum: 50
 var intent = 'browse';
 var radius = 5000;
+
+
+// function getKeyData(){
+// 	// you need URL for this..
+// 	var baseURL = 'http://localhost:5000/ajaxRequest';
+// 	$.ajax({
+// 		url: baseURL,
+// 		type: 'GET',
+// 		success: function(data){
+// 			// console.log(data);
+// 		},
+// 		error: function(err){
+// 			console.log("we have problem in getting Key Data");
+// 		}
+// 	});
+// }
+
 
 function getFoursquareData(lat, lng, term){
 	// empty the array 
@@ -66,6 +75,7 @@ function getFoursquareData(lat, lng, term){
 			'&radius=' + radius + 
 			'&limit='+ limit+
 			'&client_id='+ CLIENT_ID+'&client_secret='+ CLIENT_SECRET+'&v=20141101',
+		// url: '/ajaxRequest',
 		type: 'GET',
 		dataType: 'jsonp',
 		success: function(data){
@@ -127,7 +137,8 @@ function getLikeData(tempObject){
 
 
 function mapTheData(foursquareArray){
-
+	// console.log(foursquareArray);
+	
 	// sorted objects by descending order of like
 	var sortedArray = foursquareArray.sort(function(a, b){
 		return a.likes-b.likes;
@@ -136,7 +147,7 @@ function mapTheData(foursquareArray){
 	// looping through sorted array -> and run function by passing each elements of array
 	for (var i = 0; i < sortedArray.length; i++){
 		// and draw crappy places
-		if ( sortedArray[i].likes < 50){ 
+		if ( sortedArray[i].likes < maxLikes){ 
 			drawVenues(sortedArray[i]);
 		}
 	}
@@ -148,12 +159,12 @@ function mapTheData(foursquareArray){
 // draw basic map
 var zoom = 14;
 
-L.mapbox.accessToken = '-';
+L.mapbox.accessToken = '----';
 // Create a map in the div #map
 var map = L.mapbox.map('map', 'woonyung1.k47gjle3',{ 
 	zoomControl: false,
 	minZoom:13,
-	maxZoom:15
+	maxZoom:14
 })
 .setView([40.73, -74.00], zoom); // default view 
 // move the place of zoom control to top right
@@ -169,6 +180,17 @@ function geocodeLocation(address, term){
 	geocoder.query(address, function(err, data){
 		if (data.lbounds) {
 		    map.fitBounds(data.lbounds);
+		    console.log(data);
+
+		    ///////////////////////// added later  --- ? 
+		    // convert into lat/ lng values
+			var lat = data.latlng[0];
+			var lng = data.latlng[1];
+			// REQUEST FOURSQUARE DATA
+			getFoursquareData(lat,lng, term);
+		    // DRAW CURRENT LOCATION
+		    drawCurrentLocation(lat,lng);
+
 		} else if (data.latlng) {
 			// convert into lat/ lng values
 			var lat = data.latlng[0];
@@ -235,7 +257,7 @@ function drawVenues(crappyVenue){
 
 	/////////////////// MAPPING COLOR //////////////////
 	// set range 
-	rainbow.setNumberRange(0, 50); // number of crappy venues
+	rainbow.setNumberRange(0, maxLikes); // number of crappy venues
 	var color = '#' + rainbow.colourAt(crappyVenue.likes); // map into hex value
 
 	// Draw the venue and display the information on the popup
@@ -245,9 +267,9 @@ function drawVenues(crappyVenue){
 	    fillOpacity: 1
 	}).on('mouseover',function(e){ // when user hover on the circle, it will shows the info
 		bottomPart.innerHTML = 	'<span class="smallTitle">' + crappyVenue.name 
-								+ '<br><br>' + '<img src="img/heart.png" id="heart"> '
+								+ '<br><br>' + '<img src="public/img/heart.png" id="heart"> '
 								+ crappyVenue.likes + " likes"
-								+ '<br>' + '<img src="img/marker.png" id="marker"> ' 
+								+ '<br>' + '<img src="public/img/marker.png" id="marker"> ' 
 								+ crappyVenue.checkin + " check-ins"
 								+ '<br><br>'
 								+ '<br>' + 'Distance: '
@@ -279,6 +301,8 @@ function drawVenues(crappyVenue){
 /////////////////////////////////////////////////////////////////
 /////////////////////// when document is ready//////////////////
 $(document).ready(function(){
+
+	// getKeyData();
 	
 	// if close button is pressed, hide pop up div
 	$("#close").click(function(){
@@ -368,5 +392,6 @@ $(document).ready(function(){
 
 	});
 	//when done function
+	
 
 });

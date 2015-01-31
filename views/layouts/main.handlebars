@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>test</title>
+
+{{!-- css will be added --}}
+<link rel="stylesheet" type="text/css" href="public/stylesheet.css">
+
+<!-- javascript library -->
+<!-- jQuery -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
+
+<!-- underscore -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.7.0/underscore-min.js"></script>
+
+<!-- rainbow library -->
+<script src="public/rainbowvis.js"></script>
+
+<!-- mapbox library -->
+<script src='https://api.tiles.mapbox.com/mapbox.js/v2.1.2/mapbox.js'></script>
+<link href='https://api.tiles.mapbox.com/mapbox.js/v2.1.2/mapbox.css' rel='stylesheet' />
+
+</head>
+<body>
+
+<div id ="box">
+		<div id ="topbox">
+		</div>
+
+		{{!-- this is the place that can be changed --}}
+		<div id="container">
+	       	{{{ body }}}	
+	    </div>
+
+	    <div id='footer'>
+	    </div>
+</div>
+
+<!-- main js -->
+<script type="text/javascript" src="public/script.js"></script>
+</body>
+</html>
